@@ -113,6 +113,16 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
   border-radius:999px;padding:.7em 1.5em;font-family:var(--font-display);font-weight:600;
   font-size:clamp(.85rem,2vw,1.4rem);color:var(--primary-press);box-shadow:0 16px 40px -18px rgba(58,79,149,.45);text-decoration:none}
 .url-pill:hover{background:var(--primary-bg)}
+.qr-wrap{display:flex;gap:clamp(1rem,3vw,2.5rem);align-items:center;justify-content:center;margin-top:var(--content-gap)}
+.qr-box{background:#fff;border:1px solid var(--divider);border-radius:18px;padding:clamp(.6rem,1.2vw,1rem);
+  box-shadow:0 20px 44px -22px rgba(17,17,17,.25);display:flex;flex-direction:column;align-items:center;gap:.5em}
+.qr-box img{width:clamp(96px,16vh,150px);height:clamp(96px,16vh,150px)}
+.qr-box span{font-size:var(--small-size);font-weight:600;color:var(--primary-press)}
+/* ghost brand watermark on title slide */
+.watermark{position:absolute;bottom:-.12em;left:50%;transform:translateX(-50%);
+  font-family:var(--font-display);font-weight:700;line-height:.8;white-space:nowrap;
+  font-size:clamp(6rem,17vw,15rem);color:transparent;-webkit-text-stroke:1.5px rgba(58,79,149,.12);
+  pointer-events:none;user-select:none}
 
 /* stats */
 .stat b{display:block;font-family:var(--font-display);font-size:clamp(1.3rem,3vw,2.3rem);font-weight:700;color:var(--primary)}
@@ -153,6 +163,7 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
     <p class="lede reveal">한국 장기 거주 외국인과 한국인을 잇는 O2O 커뮤니티</p>
     <p class="title-meta reveal">중간평가 발표 · 2026. 08. 14 · KOZIT</p>
   </div>
+  <div class="watermark" aria-hidden="true">potento</div>
   <span class="slide-num">01</span>
 </section>
 
@@ -231,8 +242,12 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
     <a class="url-pill reveal" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
       kwoney.github.io/potento-landing ↗
     </a>
-    <p class="lede reveal" style="margin-top:var(--content-gap);font-size:var(--small-size)">
-      Android 실기기에서 APK 설치 후 휴대폰 OTP 또는 Google 계정으로 로그인
+    <div class="qr-wrap reveal">
+      <div class="qr-box"><img src="../qr-landing.svg" alt="서비스 소개 페이지 QR"><span>서비스 페이지</span></div>
+      <div class="qr-box"><img src="../qr-apk.svg" alt="Android APK 다운로드 QR"><span>Android APK 설치</span></div>
+    </div>
+    <p class="lede reveal" style="margin-top:var(--element-gap);font-size:var(--small-size)">
+      Android 실기기에서 APK 설치 후 휴대폰 OTP로 로그인
     </p>
   </div>
   <span class="slide-num">05</span>
@@ -293,6 +308,9 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
     <a class="url-pill reveal" style="margin-top:var(--content-gap)" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
       kwoney.github.io/potento-landing ↗
     </a>
+    <div class="qr-wrap reveal">
+      <div class="qr-box"><img src="../qr-landing.svg" alt="서비스 소개 페이지 QR"><span>지금 스캔해 보세요</span></div>
+    </div>
   </div>
   <span class="slide-num">08</span>
 </section>
