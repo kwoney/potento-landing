@@ -93,6 +93,25 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 /* problem cards */
 .pain .in{border-top:3px solid var(--primary-border)}
 .big-num{font-family:var(--font-display);font-size:clamp(1.2rem,2.6vw,2rem);font-weight:700;color:var(--primary)}
+/* app reference chips (competitor/benchmark apps I actually used) */
+.chip-row{display:flex;gap:clamp(.35rem,.8vw,.6rem);flex-wrap:wrap;margin-top:var(--element-gap)}
+.app-chip{background:var(--card);border:1px solid var(--divider);border-radius:999px;
+  padding:.45em 1.1em;font-size:var(--small-size);font-weight:600;color:var(--sub)}
+/* pain → solution mapping rows */
+.map-list{display:flex;flex-direction:column;gap:clamp(.35rem,.9vh,.7rem);margin-top:var(--content-gap)}
+.map-row{display:grid;grid-template-columns:1fr auto 1.25fr;align-items:center;gap:clamp(.5rem,1.2vw,1rem);
+  background:var(--card);border:1px solid var(--divider);border-radius:14px;
+  padding:clamp(.5rem,1.1vh,.85rem) clamp(.8rem,1.5vw,1.2rem)}
+.map-row .p{font-size:var(--small-size);font-weight:700;letter-spacing:-.01em}
+.map-row .arr{color:var(--primary);font-weight:700}
+.map-row .s{font-size:var(--small-size);color:var(--sub);line-height:1.45}
+.map-row .s b{color:var(--primary-press);font-weight:700}
+@media(max-width:600px){.map-row{grid-template-columns:1fr;gap:.15rem}.map-row .arr{display:none}}
+/* benchmark map */
+.bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--content-gap)}
+.bench-grid .bz .in{padding:clamp(.7rem,1.4vw,1.2rem)}
+.bench-grid h3{font-size:clamp(.8rem,1.3vw,1rem)}
+.bench-grid .src{font-size:clamp(.6rem,.9vw,.78rem);font-weight:700;color:var(--primary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4em}
 
 /* flow diagram */
 .flow{display:flex;align-items:center;gap:clamp(.4rem,1vw,.8rem);flex-wrap:wrap;margin-top:var(--element-gap)}
@@ -167,35 +186,64 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
   <span class="slide-num">01</span>
 </section>
 
-<!-- 2. PROBLEM -->
+<!-- 2. ORIGIN — founder story -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Problem</span>
-    <h2 class="reveal">한국에 살지만,<br>한국 생활에 <span class="accent">연결되지 못하는</span> 사람들</h2>
+    <span class="eyebrow reveal">Origin</span>
+    <h2 class="reveal">이 문제를,<br><span class="accent">운영자로서 직접</span> 겪었습니다</h2>
+    <p class="lede reveal">오프라인 커뮤니티를 직접 운영하며 사람을 모으고, 벤치마킹을 위해 국내외 모임 앱을 전부 써봤습니다. PotentO의 모든 기능은 그 과정에서 겪은 불편에서 출발합니다.</p>
+    <div class="chip-row reveal">
+      <span class="app-chip">Meetup</span><span class="app-chip">Soo House</span><span class="app-chip">Nomad Table</span>
+      <span class="app-chip">당근 모임</span><span class="app-chip">문토</span><span class="app-chip">소모임</span>
+    </div>
     <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz pain"><div class="in">
-        <div class="big-num">언어 장벽</div>
-        <p>관심사가 같아도 언어가 달라 시작조차 못 하는 대화. 기존 커뮤니티는 한국어 아니면 영어, 한쪽만 지원합니다.</p>
-      </div></div>
-      <div class="bz pain"><div class="in">
-        <div class="big-num">일회성 만남</div>
-        <p>이벤트 앱은 한 번 모이고 끝. 관계가 쌓이지 않으니 다시 처음부터 낯선 사람을 만나야 합니다.</p>
-      </div></div>
-      <div class="bz pain"><div class="in">
-        <div class="big-num">신뢰 · 안전 불안</div>
-        <p>익명 기반 만남의 불안함. 특히 외국인과의 오프라인 만남에서 상대를 믿을 근거가 없습니다.</p>
-      </div></div>
+      <div class="bz"><div class="in"><h3>운영자의 눈</h3><p>모임을 열고 사람을 모으는 쪽에서 무엇이 힘든지 — 노쇼, 홍보, 개설 비용</p></div></div>
+      <div class="bz"><div class="in"><h3>참가자의 눈</h3><p>모임에 들어가는 쪽에서 무엇이 불안한지 — 언어, 신뢰, 낯선 사람과의 1:1</p></div></div>
     </div>
   </div>
   <span class="slide-num">02</span>
 </section>
 
-<!-- 3. SOLUTION -->
+<!-- 3. PAIN POINTS -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Pain Points</span>
+    <h2 class="reveal">기존 앱들을 쓰며 만난 <span class="accent">6가지 벽</span></h2>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz pain"><div class="in"><h3>🌐 언어 장벽</h3><p>외국인에게는 콘텐츠 자체가 진입장벽. 한국어 아니면 영어, 한쪽만 지원</p></div></div>
+      <div class="bz pain"><div class="in"><h3>👻 노쇼</h3><p>운영자는 당일까지 참여 인원을 예측할 수 없다 — 모임 퀄리티를 흔드는 1순위</p></div></div>
+      <div class="bz pain"><div class="in"><h3>🎭 신뢰 · 로맨스 스캠</h3><p>낯선 사람과의 1:1 만남 불안, 스캠 계정의 무차별 DM</p></div></div>
+      <div class="bz pain"><div class="in"><h3>🔕 메시지를 안 본다</h3><p>공지를 보내도 확인율이 낮다 — 알림 설계와 UI 배치의 문제</p></div></div>
+      <div class="bz pain"><div class="in"><h3>📅 일정 겹침</h3><p>여러 모임에 참여할수록 일정 충돌을 본인도 모른다</p></div></div>
+      <div class="bz pain"><div class="in"><h3>💸 개설 부담</h3><p>첫 그룹을 만들기까지 신경 쓸 게 너무 많고, 노출은 유료 — 운영자 진입장벽</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">03</span>
+</section>
+
+<!-- 4. PAIN → SOLUTION MAPPING -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Solution</span>
+    <h2 class="reveal">겪은 문제 → 넣은 기능</h2>
+    <div class="map-list reveal">
+      <div class="map-row"><span class="p">🌐 언어 장벽</span><span class="arr">→</span><span class="s"><b>콘텐츠 자동 번역 + 채팅 즉시 번역</b> — 초기 진입장벽부터 낮춘다</span></div>
+      <div class="map-row"><span class="p">👻 노쇼</span><span class="arr">→</span><span class="s"><b>승인제 참가 · D-1 확정 리마인드</b> — 운영자가 인원을 예측할 수 있게</span></div>
+      <div class="map-row"><span class="p">🎭 신뢰 · 스캠</span><span class="arr">→</span><span class="s"><b>1:1 DM은 신뢰 관계에서만</b> · 신고/차단 시 채팅 가림 · 프로필 인증 뱃지</span></div>
+      <div class="map-row"><span class="p">🔕 메시지 확인</span><span class="arr">→</span><span class="s"><b>채팅 통합 탭 + 알림 범위 설계</b> — 봐야 할 것만 확실히 닿게</span></div>
+      <div class="map-row"><span class="p">📅 일정 겹침</span><span class="arr">→</span><span class="s"><b>참가 시 겹침 경고</b> — 충돌을 참가 시점에 미리 알려준다</span></div>
+      <div class="map-row"><span class="p">💸 개설 부담</span><span class="arr">→</span><span class="s"><b>무료 · 가벼운 그룹 개설 플로우</b> — 운영자 공급을 막지 않는다</span></div>
+    </div>
+  </div>
+  <span class="slide-num">04</span>
+</section>
+
+<!-- 5. STRUCTURE PHILOSOPHY -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Structure</span>
     <h2 class="reveal">그룹이 남고, 일정이 반복되는<br><span class="accent">지속형 커뮤니티</span></h2>
-    <p class="lede reveal">PotentO는 만남을 일회성 이벤트가 아니라 커뮤니티 구조로 설계했습니다.</p>
+    <p class="lede reveal">만남을 일회성 이벤트가 아니라 커뮤니티 구조로 설계했습니다. 관계가 자산으로 쌓여야 운영자도, 참가자도 다시 돌아옵니다.</p>
     <div class="flow reveal">
       <div class="node">🏠 그룹 개설<small>관심사 기반, 지속</small></div>
       <span class="arr">→</span>
@@ -205,32 +253,28 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
       <span class="arr">→</span>
       <div class="node">🤝 친구 · DM<small>관계로 전환</small></div>
     </div>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><div class="ic">🌐</div><h3>한 · 영 동시 지원</h3><p>모임 소개는 자동 번역·캐싱, 채팅은 길게 눌러 즉시 번역 (DeepL)</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">✓</div><h3>신뢰 기반 인증</h3><p>비자·외국인등록증 선택 인증 → 프로필 ✓ 뱃지로 신뢰 축적</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">🛡️</div><h3>안전 장치 내장</h3><p>승인제 참가 · 신고/차단 · 만 18세 가입 기준 · D-1 참석 리마인더</p></div></div>
-    </div>
-  </div>
-  <span class="slide-num">03</span>
-</section>
-
-<!-- 4. PRODUCT -->
-<section class="slide">
-  <div class="slide-content">
-    <span class="eyebrow reveal">Product</span>
-    <h2 class="reveal">MVP에 담은 핵심 경험</h2>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><div class="ic">🔍</div><h3>홈 · 지도 탐색</h3><p>피드와 지도(클러스터링)에서 내 주변 모임 탐색, 카테고리 8종 필터</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">💬</div><h3>실시간 채팅 3종</h3><p>모임 채팅 · 그룹 채팅 · 1:1 DM — Supabase Realtime 기반</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">🔔</div><h3>푸시 알림</h3><p>채팅·친구·참가·승인 알림. 수신자와 문구는 서버가 결정하는 보안 구조</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">👥</div><h3>참가 방식 선택</h3><p>즉시 참가 또는 호스트 승인제 — 호스트가 참가자를 거를 수 있는 안전판</p></div></div>
-    </div>
     <div style="margin-top:var(--content-gap)" class="reveal">
       <div class="bub you">주말에 북한산 등산 가실 분?<span class="tr">Anyone up for hiking Bukhansan this weekend?</span></div>
       <div class="bub me">Count me in! 저 참가할게요 🙌</div>
     </div>
   </div>
-  <span class="slide-num">04</span>
+  <span class="slide-num">05</span>
+</section>
+
+<!-- 6. UI/UX BENCHMARKS -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Design Decisions</span>
+    <h2 class="reveal">외국 앱의 미감 × <span class="accent">한국 앱의 효율</span></h2>
+    <p class="lede reveal">각 화면마다 그 영역에서 가장 잘하는 앱을 근거로 삼았습니다.</p>
+    <div class="bench-grid reveal">
+      <div class="bz"><div class="in"><div class="src">Meetup</div><h3>전체 디자인 · 프로필</h3><p>외국인에게 이미 익숙한 글로벌 표준 — 학습 비용 0</p></div></div>
+      <div class="bz"><div class="in"><div class="src">Nomad Table · 네이버</div><h3>지도 탐색</h3><p>근처 모임을 시각적 재미로 발견하는 직관적 경험</p></div></div>
+      <div class="bz"><div class="in"><div class="src">카카오 · WhatsApp</div><h3>채팅</h3><p>한국·글로벌 사용자 모두에게 익숙한 대화 문법</p></div></div>
+      <div class="bz"><div class="in"><div class="src">Instagram</div><h3>제스처 UX</h3><p>스와이프 탭 전환, 더블탭 새로고침 — 손에 붙은 습관 그대로</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">06</span>
 </section>
 
 <!-- 5. DEMO -->
@@ -250,10 +294,10 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
       Android 실기기에서 APK 설치 후 휴대폰 OTP로 로그인
     </p>
   </div>
-  <span class="slide-num">05</span>
+  <span class="slide-num">07</span>
 </section>
 
-<!-- 6. PROGRESS -->
+<!-- 8. PROGRESS -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Progress</span>
@@ -270,10 +314,24 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
       <div class="bz"><div class="in"><h3>🎯 다음</h3><p>iOS 첫 빌드 → TestFlight 베타 → App Store · Google Play 동시 정식 출시</p></div></div>
     </div>
   </div>
-  <span class="slide-num">06</span>
+  <span class="slide-num">08</span>
 </section>
 
-<!-- 7. ROADMAP -->
+<!-- 9. BUSINESS MODEL -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Business</span>
+    <h2 class="reveal">커뮤니티 위에 얹는 수익 구조</h2>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><div class="ic">✨</div><h3>For You 제휴 리스팅</h3><p>홈 탭의 큐레이션 영역 — 이벤트 제휴·광고 모델(Soo House 방식 벤치마크)을 담는 그릇. MVP에 이미 탑재</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">🤝</div><h3>B2B 정착 지원 제휴</h3><p>외국인 정착을 돕는 서비스들과의 제휴 — 타깃이 명확한 채널이라는 강점</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">💳</div><h3>유료 모임 (Phase 2)</h3><p>결제 연동 후 유료 모임 개설 지원 — 노쇼 억제와 수익화를 동시에</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">09</span>
+</section>
+
+<!-- 10. ROADMAP -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Roadmap</span>
@@ -296,10 +354,10 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
       </div></div>
     </div>
   </div>
-  <span class="slide-num">07</span>
+  <span class="slide-num">10</span>
 </section>
 
-<!-- 8. CLOSING -->
+<!-- 11. CLOSING -->
 <section class="slide dark">
   <div class="slide-content center">
     <div class="logo-row reveal" style="justify-content:center"><img src="../icon.png" alt="PotentO 로고"><span style="color:#fff">potento</span></div>
@@ -312,7 +370,7 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
       <div class="qr-box"><img src="../qr-landing.svg" alt="서비스 소개 페이지 QR"><span>지금 스캔해 보세요</span></div>
     </div>
   </div>
-  <span class="slide-num">08</span>
+  <span class="slide-num">11</span>
 </section>
 
 <script>
