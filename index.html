@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PotentO — 관심사로 연결되는 한국 생활</title>
+<meta name="description" content="한국 장기 거주 외국인과 한국인을 관심사로 연결하는 O2O 커뮤니티. 그룹을 만들고, 일정을 열고, 언어 장벽 없이 만나세요." />
+<meta property="og:title" content="PotentO — Meet beyond language" />
+<meta property="og:description" content="한국 장기 거주 외국인과 한국인을 관심사로 연결하는 O2O 커뮤니티 앱" />
+<meta property="og:image" content="https://kwoney.github.io/potento-landing/icon.png" />
+<link rel="icon" href="favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --primary:#3A4F95; --primary-hover:#4D63A8; --primary-press:#2D3E7A;
+  --primary-bg:#EEF1FA; --primary-soft:#D6E4F0; --primary-border:#C5CDE8;
+  --ink:#111111; --sub:#737373; --hint:#B0B0B0;
+  --bg:#F9F9F9; --card:#FFFFFF; --divider:#EFEFEF;
+  --ease:cubic-bezier(0.32,0.72,0,1);
+  --c-sports:#E8694A; --c-food:#F0A046; --c-culture:#9B59B6; --c-language:#3498DB;
+  --c-hobby:#27AE60; --c-networking:#2C7BE5; --c-life:#16A085;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Pretendard Variable',Pretendard,sans-serif;
+  background:var(--bg); color:var(--ink);
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+.brand-font{font-family:'Josefin Sans',sans-serif}
+::selection{background:var(--primary-soft)}
+
+/* ── ambient background ── */
+.mesh{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(600px 400px at 85% -5%, rgba(58,79,149,.10), transparent 60%),
+    radial-gradient(700px 500px at -10% 40%, rgba(52,152,219,.08), transparent 60%),
+    radial-gradient(500px 400px at 70% 90%, rgba(232,105,74,.06), transparent 60%);
+}
+
+/* ── floating pill nav ── */
+nav{
+  position:fixed; top:0; left:50%; transform:translateX(-50%);
+  margin-top:24px; z-index:100;
+  display:flex; align-items:center; gap:6px;
+  padding:8px 8px 8px 20px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(17,17,17,.06); border-radius:999px;
+  box-shadow:0 12px 40px -16px rgba(17,17,17,.18);
+  transition:box-shadow .7s var(--ease);
+  white-space:nowrap;
+}
+nav .logo{display:flex;align-items:center;gap:9px;margin-right:12px;text-decoration:none;color:var(--ink)}
+nav .logo img{width:26px;height:26px;border-radius:8px}
+nav .logo span{font-family:'Josefin Sans';font-weight:700;font-size:17px;letter-spacing:-.01em;position:relative;top:1px}
+nav .links{display:flex;gap:2px}
+nav .links a{
+  font-size:13.5px;font-weight:500;color:var(--sub);text-decoration:none;
+  padding:8px 13px;border-radius:999px;
+  transition:color .5s var(--ease), background .5s var(--ease);
+}
+nav .links a:hover{color:var(--ink);background:rgba(17,17,17,.04)}
+nav .cta{
+  display:flex;align-items:center;gap:8px;
+  font-size:13.5px;font-weight:600;color:#fff;text-decoration:none;
+  background:var(--primary); padding:8px 8px 8px 16px;border-radius:999px;
+  transition:background .5s var(--ease), transform .5s var(--ease);
+}
+nav .cta:hover{background:var(--primary-hover)}
+nav .cta:active{transform:scale(.97)}
+nav .cta .orb{
+  width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  transition:transform .5s var(--ease);
+}
+nav .cta:hover .orb{transform:translate(2px,-1px) scale(1.06)}
+@media(max-width:720px){ nav .links{display:none} }
+
+/* ── shared ── */
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:104px 0}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--primary); background:var(--primary-bg);
+  border:1px solid var(--primary-border); border-radius:999px; padding:6px 14px 5px;
+}
+.eyebrow::before{content:'';width:5px;height:5px;border-radius:99px;background:var(--primary)}
+h1{font-size:clamp(40px,6.2vw,68px);line-height:1.06;letter-spacing:-.035em;font-weight:800;margin:26px 0 22px}
+h1 .accent{color:var(--primary)}
+h2{font-size:clamp(30px,4vw,44px);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin:22px 0 14px}
+.lede{font-size:17.5px;line-height:1.65;color:var(--sub);max-width:520px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(48px);filter:blur(8px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease)}
+.rv.on{opacity:1;transform:translateY(0);filter:blur(0)}
+
+/* ── hero ── */
+.hero{padding:176px 0 60px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+@media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:72px}}
+.hero-ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  border-radius:999px;padding:13px 10px 13px 22px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  transition:transform .5s var(--ease),background .5s var(--ease),box-shadow .5s var(--ease);
+}
+.btn:active{transform:scale(.98)}
+.btn .orb{
+  width:32px;height:32px;border-radius:999px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;
+  transition:transform .5s var(--ease);
+}
+.btn:hover .orb{transform:translate(3px,-1px) scale(1.05)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 20px 40px -18px rgba(58,79,149,.55)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-primary .orb{background:rgba(255,255,255,.18)}
+.btn-ghost{background:rgba(17,17,17,.04);color:var(--ink);border:1px solid rgba(17,17,17,.07)}
+.btn-ghost:hover{background:rgba(17,17,17,.07)}
+.btn-ghost .orb{background:rgba(17,17,17,.06)}
+.hero-note{margin-top:18px;font-size:13px;color:var(--hint)}
+
+/* ── phone mockup ── */
+.phone-stage{display:flex;justify-content:center;position:relative}
+.phone-shell{
+  background:rgba(17,17,17,.05);border:1px solid rgba(17,17,17,.07);
+  padding:10px;border-radius:56px;transform:rotate(2.5deg);
+  box-shadow:0 60px 120px -48px rgba(17,17,17,.35);
+  transition:transform 1s var(--ease);
+}
+.phone-stage:hover .phone-shell{transform:rotate(1deg) translateY(-6px)}
+.phone{
+  width:308px;background:#0d0f14;border-radius:46px;padding:9px;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.15);
+}
+.screen{background:var(--bg);border-radius:38px;overflow:hidden;position:relative}
+.notch{height:26px;display:flex;justify-content:center;align-items:flex-end}
+.notch i{width:78px;height:18px;background:#0d0f14;border-radius:999px;margin-top:-6px}
+.app{padding:10px 14px 0;font-size:11px}
+.app-head{display:flex;justify-content:space-between;align-items:center;padding:4px 2px 10px}
+.app-head .lg{font-family:'Josefin Sans';font-weight:700;font-size:16px}
+.app-head .ico{display:flex;gap:8px;color:var(--sub);font-size:12px}
+.search{background:#fff;border:1px solid var(--divider);border-radius:12px;padding:8px 12px;color:var(--hint);font-size:10.5px}
+.chips{display:flex;gap:6px;margin:10px 0;overflow:hidden}
+.chip{flex-shrink:0;border-radius:999px;padding:5px 11px;font-size:9.5px;font-weight:600;background:#fff;border:1px solid var(--divider);color:var(--sub)}
+.chip.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.mcard{background:#fff;border:1px solid var(--divider);border-radius:16px;padding:11px 12px;margin-bottom:8px}
+.mcard .row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.mcard .cat{font-size:8.5px;font-weight:700;padding:3px 8px;border-radius:999px}
+.mcard .dday{font-size:8.5px;font-weight:700;color:var(--primary)}
+.mcard .tt{font-weight:700;font-size:11.5px;margin-bottom:3px}
+.mcard .meta{font-size:9px;color:var(--hint)}
+.mcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+.avvs{display:flex}
+.avvs i{width:16px;height:16px;border-radius:99px;border:1.5px solid #fff;margin-left:-5px}
+.avvs i:first-child{margin-left:0}
+.joinp{font-size:8.5px;font-weight:600;color:var(--sub)}
+.tabbar{display:flex;justify-content:space-around;background:#fff;border-top:1px solid var(--divider);padding:9px 0 14px;margin:6px -14px 0}
+.tabbar b{font-size:8px;font-weight:600;color:var(--hint);display:flex;flex-direction:column;align-items:center;gap:3px}
+.tabbar b.on{color:var(--primary)}
+.tabbar b span{font-size:13px}
+/* floating translate toast */
+.float-tag{
+  position:absolute; z-index:5;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(12px);
+  border:1px solid rgba(17,17,17,.06);border-radius:16px;
+  box-shadow:0 24px 48px -20px rgba(17,17,17,.28);
+  padding:10px 14px;font-size:11px;font-weight:600;
+}
+.float-tag small{display:block;font-weight:500;color:var(--sub);font-size:9.5px;margin-top:2px}
+.ft1{top:104px;right:-38px;transform:rotate(-2deg)}
+.ft2{bottom:88px;left:-46px;transform:rotate(1.5deg)}
+@media(max-width:880px){.ft1{right:4px}.ft2{left:4px}}
+
+/* ── trust strip ── */
+.strip{padding:36px 0 8px}
+.strip-inner{
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  border-top:1px solid var(--divider);padding-top:36px;
+}
+.strip b{font-size:13px;font-weight:600;color:var(--sub);display:flex;align-items:center;gap:9px}
+.strip b i{font-style:normal;font-size:15px}
+
+/* ── bento ── */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:52px}
+.cell-outer{
+  background:rgba(17,17,17,.035);border:1px solid rgba(17,17,17,.055);
+  border-radius:28px;padding:7px;
+  transition:transform .7s var(--ease);
+}
+.cell-outer:hover{transform:translateY(-4px)}
+.cell{
+  background:var(--card);border-radius:21px;height:100%;
+  padding:28px 26px;position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.9), 0 1px 2px rgba(17,17,17,.03);
+}
+.cell .ic{
+  width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;margin-bottom:18px;background:var(--primary-bg);
+}
+.cell h3{font-size:17px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.cell p{font-size:13.5px;line-height:1.6;color:var(--sub)}
+.cell .tagline{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--primary);margin-bottom:10px}
+.c-span6{grid-column:span 6}.c-span4{grid-column:span 4}.c-span8{grid-column:span 8}
+@media(max-width:880px){.c-span6,.c-span4,.c-span8{grid-column:span 12}}
+/* group→schedule diagram inside big cell */
+.flow{display:flex;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.flow .node{
+  background:var(--primary-bg);border:1px solid var(--primary-border);
+  border-radius:14px;padding:10px 16px;font-size:12.5px;font-weight:700;color:var(--primary-press);
+}
+.flow .node small{display:block;font-weight:500;font-size:10px;color:var(--primary);margin-top:2px}
+.flow .arr{color:var(--hint);font-size:14px}
+/* lang bubble demo */
+.bub{border-radius:14px;padding:10px 14px;font-size:12px;max-width:240px;margin-top:10px;line-height:1.5}
+.bub.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
+.bub.you{background:#F2F2F2;color:var(--ink);border-bottom-left-radius:4px}
+.bub .tr{display:block;margin-top:5px;padding-top:5px;border-top:1px dashed rgba(17,17,17,.15);color:var(--sub);font-size:11px}
+.bub.me .tr{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.85)}
+
+/* ── steps ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px}
+@media(max-width:880px){.steps{grid-template-columns:1fr}}
+.step-outer{background:rgba(17,17,17,.035);border:1px solid rgba(17,17,17,.055);border-radius:28px;padding:7px}
+.step{background:var(--card);border-radius:21px;padding:30px 26px;height:100%;box-shadow:inset 0 1px 1px rgba(255,255,255,.9)}
+.step .num{
+  font-family:'Josefin Sans';font-size:13px;font-weight:700;color:var(--primary);
+  width:34px;height:34px;border-radius:999px;background:var(--primary-bg);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;padding-top:3px;
+}
+.step h3{font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-.02em}
+.step p{font-size:13.5px;line-height:1.6;color:var(--sub)}
+
+/* ── download ── */
+.dl-outer{
+  background:rgba(17,17,17,.04);border:1px solid rgba(17,17,17,.06);
+  border-radius:36px;padding:9px;margin-top:52px;
+}
+.dl{
+  background:linear-gradient(135deg,#151a2e 0%,#2D3E7A 55%,#3A4F95 100%);
+  border-radius:28px;padding:64px 48px;color:#fff;position:relative;overflow:hidden;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.12);
+}
+.dl::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(420px 300px at 85% 20%,rgba(255,255,255,.10),transparent 65%)}
+.dl h2{color:#fff;margin-top:0}
+.dl p{color:rgba(255,255,255,.72);font-size:15.5px;line-height:1.6;max-width:480px}
+.dl-cards{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.dl-card{
+  flex:1;min-width:240px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:20px;padding:22px 24px;backdrop-filter:blur(4px);
+  text-decoration:none;color:#fff;display:block;
+  transition:background .6s var(--ease),transform .6s var(--ease);
+}
+a.dl-card:hover{background:rgba(255,255,255,.13);transform:translateY(-3px)}
+.dl-card b{font-size:15.5px;font-weight:700;display:flex;align-items:center;gap:9px}
+.dl-card span{display:block;font-size:12.5px;color:rgba(255,255,255,.62);margin-top:6px;line-height:1.5}
+.dl-card .soon{
+  display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(255,255,255,.14);border-radius:999px;padding:4px 10px 3px;margin-top:12px;
+}
+
+/* ── footer ── */
+footer{padding:56px 0 72px;border-top:1px solid var(--divider);margin-top:104px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot .l{display:flex;align-items:center;gap:10px}
+.foot .l img{width:24px;height:24px;border-radius:7px}
+.foot .l span{font-family:'Josefin Sans';font-weight:700;font-size:15px;position:relative;top:1px}
+.foot p{font-size:12.5px;color:var(--hint)}
+</style>
+</head>
+<body>
+<div class="mesh"></div>
+
+<nav>
+  <a class="logo" href="#"><img src="icon.png" alt="PotentO"/><span>potento</span></a>
+  <div class="links">
+    <a href="#features">기능</a>
+    <a href="#how">이용 방법</a>
+    <a href="#download">다운로드</a>
+  </div>
+  <a class="cta" href="#download">베타 참여<span class="orb">↗</span></a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="rv">
+      <span class="eyebrow">O2O Community · Expats × Locals</span>
+      <h1>관심사로 연결되는<br/><span class="accent">한국 생활</span>의 시작</h1>
+      <p class="lede">한국에 거주하는 외국인과 글로벌 네트워킹을 원하는 한국인이 언어 장벽 없이 만나는 커뮤니티. 그룹을 만들고, 일정을 열고, 오프라인에서 만나세요.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#download">Android 베타 받기<span class="orb">↓</span></a>
+        <a class="btn btn-ghost" href="#features">기능 살펴보기<span class="orb">→</span></a>
+      </div>
+      <p class="hero-note">iOS TestFlight 베타 준비 중 · 문의 aion30500@ainuri.kr</p>
+    </div>
+    <div class="phone-stage rv" style="transition-delay:.15s">
+      <div class="float-tag ft1">🌐 자동 번역<small>DeepL로 한 ↔ 영 실시간</small></div>
+      <div class="float-tag ft2">✓ 신뢰 인증<small>비자·외국인등록증 기반 뱃지</small></div>
+      <div class="phone-shell"><div class="phone"><div class="screen">
+        <div class="notch"><i></i></div>
+        <div class="app">
+          <div class="app-head"><span class="lg">potento</span><span class="ico">🔔 🌐</span></div>
+          <div class="search">🔍 관심사, 모임, 장소 검색</div>
+          <div class="chips">
+            <span class="chip on">전체</span><span class="chip">언어교류</span><span class="chip">음식</span><span class="chip">스포츠</span><span class="chip">문화</span>
+          </div>
+          <div class="mcard">
+            <div class="row1"><span class="cat" style="background:#EAF3FB;color:#3498DB">언어교류</span><span class="dday">D-2</span></div>
+            <div class="tt">한강 피크닉 & Language Exchange</div>
+            <div class="meta">토 오후 2:00 · 뚝섬한강공원</div>
+            <div class="foot">
+              <div class="avvs"><i style="background:#F0A046"></i><i style="background:#3498DB"></i><i style="background:#9B59B6"></i></div>
+              <span class="joinp">7/10 참여 중</span>
+            </div>
+          </div>
+          <div class="mcard">
+            <div class="row1"><span class="cat" style="background:#FDF3E7;color:#F0A046">음식</span><span class="dday">D-5</span></div>
+            <div class="tt">을지로 노포 투어 🍜</div>
+            <div class="meta">수 오후 7:00 · 을지로3가</div>
+            <div class="foot">
+              <div class="avvs"><i style="background:#27AE60"></i><i style="background:#E8694A"></i></div>
+              <span class="joinp">4/6 참여 중</span>
+            </div>
+          </div>
+          <div class="tabbar">
+            <b class="on"><span>⌂</span>홈</b><b><span>◎</span>지도</b><b><span>💬</span>채팅</b><b><span>☰</span>프로필</b>
+          </div>
+        </div>
+      </div></div></div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST STRIP -->
+<div class="strip"><div class="wrap">
+  <div class="strip-inner rv">
+    <b><i>🇰🇷🌍</i> 한·영 동시 지원</b>
+    <b><i>✓</i> 신뢰 기반 프로필 인증</b>
+    <b><i>👥</i> 그룹 → 일정, 지속되는 관계</b>
+    <b><i>🔔</i> 노쇼 방지 D-1 리마인더</b>
+  </div>
+</div></div>
+
+<!-- FEATURES -->
+<section id="features"><div class="wrap">
+  <div class="rv">
+    <span class="eyebrow">Features</span>
+    <h2>일회성 만남이 아니라,<br/>계속되는 커뮤니티</h2>
+    <p class="lede">한 번 모이고 흩어지는 이벤트가 아닙니다. 그룹이 남고, 일정이 반복되고, 관계가 이어집니다.</p>
+  </div>
+  <div class="bento">
+    <div class="cell-outer c-span8 rv"><div class="cell">
+      <div class="tagline">Core Structure</div>
+      <h3>그룹 → 일정, 2단계 구조</h3>
+      <p>호스트가 지속되는 그룹을 만들고, 그 안에서 반복되는 일정을 엽니다. 즉시 참가와 호스트 승인제 중 선택할 수 있어 안전한 모임 운영이 가능합니다.</p>
+      <div class="flow">
+        <div class="node">🏠 그룹 개설<small>관심사 기반 커뮤니티</small></div>
+        <span class="arr">→</span>
+        <div class="node">📅 일정 등록<small>반복 개최</small></div>
+        <span class="arr">→</span>
+        <div class="node">💬 모임 채팅<small>참가자 전용</small></div>
+      </div>
+    </div></div>
+    <div class="cell-outer c-span4 rv" style="transition-delay:.1s"><div class="cell">
+      <div class="ic">🌐</div>
+      <h3>언어 장벽 없는 대화</h3>
+      <p>모임 소개는 자동 번역되어 캐싱되고, 채팅은 길게 눌러 바로 번역합니다.</p>
+      <div class="bub you">주말에 북한산 등산 가실 분?<span class="tr">Anyone up for hiking Bukhansan this weekend?</span></div>
+    </div></div>
+    <div class="cell-outer c-span4 rv"><div class="cell">
+      <div class="ic">🗺️</div>
+      <h3>지도로 탐색</h3>
+      <p>내 주변에서 열리는 모임을 지도에서 한눈에. 클러스터링으로 밀집 지역도 빠르게 훑어볼 수 있습니다.</p>
+    </div></div>
+    <div class="cell-outer c-span4 rv" style="transition-delay:.08s"><div class="cell">
+      <div class="ic">✓</div>
+      <h3>신뢰 기반 인증</h3>
+      <p>비자·외국인등록증 기반 선택 인증. 인증한 사용자는 프로필에 ✓ 뱃지가 붙어 신뢰를 쌓습니다.</p>
+    </div></div>
+    <div class="cell-outer c-span4 rv" style="transition-delay:.16s"><div class="cell">
+      <div class="ic">🛡️</div>
+      <h3>안전한 커뮤니티</h3>
+      <p>신고·차단, 만 18세 가입 기준, 참석 D-1 리마인더까지. 오프라인 만남의 안전장치를 앱이 챙깁니다.</p>
+    </div></div>
+    <div class="cell-outer c-span6 rv"><div class="cell">
+      <div class="ic">💬</div>
+      <h3>모임 채팅 · 그룹 채팅 · 1:1 DM</h3>
+      <p>참가가 확정되면 모임 채팅방이 열립니다. 친구가 되면 1:1 DM으로 이어지고, 실시간 푸시 알림으로 놓치지 않습니다.</p>
+    </div></div>
+    <div class="cell-outer c-span6 rv" style="transition-delay:.1s"><div class="cell">
+      <div class="ic">🤝</div>
+      <h3>한 · 외 믹스 모임</h3>
+      <p>외국인만도, 한국인만도 아닌 진짜 교류. 언어교류·음식·스포츠·문화 등 8개 카테고리에서 관심사가 같은 사람을 만납니다.</p>
+    </div></div>
+  </div>
+</div></section>
+
+<!-- HOW -->
+<section id="how" style="padding-top:0"><div class="wrap">
+  <div class="rv">
+    <span class="eyebrow">How it works</span>
+    <h2>세 번의 탭이면 충분해요</h2>
+  </div>
+  <div class="steps">
+    <div class="step-outer rv"><div class="step">
+      <div class="num">01</div>
+      <h3>관심사 고르기</h3>
+      <p>닉네임, 국적, 관심사만으로 가입 끝. 복잡한 서류 없이 시작하고, 인증은 원할 때 선택하면 됩니다.</p>
+    </div></div>
+    <div class="step-outer rv" style="transition-delay:.1s"><div class="step">
+      <div class="num">02</div>
+      <h3>모임 찾기 · 참가하기</h3>
+      <p>홈 피드와 지도에서 모임을 찾고 탭 한 번으로 참가 신청. 확정되면 모임 채팅방이 바로 열립니다.</p>
+    </div></div>
+    <div class="step-outer rv" style="transition-delay:.2s"><div class="step">
+      <div class="num">03</div>
+      <h3>만나고, 이어가기</h3>
+      <p>오프라인에서 만난 인연을 그룹으로, 친구로, DM으로. 다음 일정 알림까지 앱이 챙겨드립니다.</p>
+    </div></div>
+  </div>
+</div></section>
+
+<!-- DOWNLOAD -->
+<section id="download" style="padding-top:0"><div class="wrap">
+  <div class="dl-outer rv"><div class="dl">
+    <span class="eyebrow" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff">Beta Program</span>
+    <h2>지금 베타에 참여하세요</h2>
+    <p>PotentO는 현재 비공개 베타 준비 중입니다. Android 베타 빌드를 받아 가장 먼저 사용해 보세요.</p>
+    <div class="dl-cards">
+      <a class="dl-card" id="apk-card" href="https://expo.dev/accounts/kwoney/projects/PotentO/builds/6046c4fd-d76a-4836-bfea-d8c37ab746b7">
+        <b>🤖 Android APK</b>
+        <span>베타 빌드 다운로드 — 링크를 열고 Install 버튼을 누르면 설치 파일을 받을 수 있어요.</span>
+        <span class="soon">Beta</span>
+      </a>
+      <div class="dl-card">
+        <b> iOS TestFlight</b>
+        <span>App Store 정식 출시와 함께 TestFlight 베타를 준비하고 있어요.</span>
+        <span class="soon">Coming soon</span>
+      </div>
+    </div>
+  </div></div>
+</div></section>
+
+<footer><div class="wrap foot">
+  <div class="l"><img src="icon.png" alt=""/><span>potento</span></div>
+  <p>© 2026 KOZIT · PotentO — Meet beyond language · aion30500@ainuri.kr</p>
+</div></footer>
+
+<script>
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
