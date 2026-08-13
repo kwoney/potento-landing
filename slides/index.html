@@ -10,11 +10,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
-/* =========================================== THEME =========================================== */
+/* ===========================================
+   THEME — 앱과 동일한 토큰. 여기만 바꾸면 전체가 바뀐다.
+   =========================================== */
 :root{
   --primary:#3A4F95; --primary-press:#2D3E7A; --primary-bg:#EEF1FA; --primary-border:#C5CDE8;
   --ink:#111111; --sub:#737373; --hint:#B0B0B0;
   --bg:#F9F9F9; --card:#FFFFFF; --divider:#EFEFEF;
+  --ok:#27AE60; --ok-bg:#E9F7EF; --warn:#E8694A;
   --font-display:'Josefin Sans',sans-serif;
   --font-body:'Pretendard Variable',Pretendard,sans-serif;
   --ease:cubic-bezier(0.32,0.72,0,1);
@@ -29,7 +32,9 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--font-body);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 
-/* =========================================== VIEWPORT BASE (mandatory) =========================================== */
+/* ===========================================
+   VIEWPORT BASE (필수) — 모든 슬라이드는 정확히 100vh에 들어간다.
+   =========================================== */
 html,body{height:100%;overflow-x:hidden}
 html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
 .slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative}
@@ -46,52 +51,63 @@ img,.image-container{max-width:100%;max-height:min(50vh,400px);object-fit:contai
 @media (max-width:600px){:root{--title-size:clamp(1.25rem,7vw,2.5rem)}.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.2s!important}html{scroll-behavior:auto}}
 
-/* =========================================== AMBIENT BG =========================================== */
+/* ===========================================
+   AMBIENT BG — 단색 배경 대신 아주 옅은 메시
+   =========================================== */
 .mesh{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
   radial-gradient(640px 420px at 88% -4%,rgba(58,79,149,.10),transparent 60%),
   radial-gradient(720px 520px at -12% 44%,rgba(52,152,219,.08),transparent 60%),
   radial-gradient(520px 420px at 72% 92%,rgba(232,105,74,.06),transparent 60%)}
 
-/* =========================================== SHARED PIECES =========================================== */
+/* ===========================================
+   SHARED — eyebrow / 제목 / 카드 / 출처
+   =========================================== */
 .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:clamp(.7rem,1.1vw,.9rem);font-weight:600;
   letter-spacing:.22em;text-transform:uppercase;color:var(--primary);background:var(--primary-bg);
   border:1px solid var(--primary-border);border-radius:999px;padding:.4em 1.2em .35em;width:max-content}
 .eyebrow::before{content:'';width:5px;height:5px;border-radius:99px;background:var(--primary)}
 h1{font-size:var(--title-size);line-height:1.08;letter-spacing:-.035em;font-weight:800;margin:clamp(.7rem,2vh,1.4rem) 0}
-h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin:clamp(.6rem,1.6vh,1.1rem) 0}
+h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin:clamp(.5rem,1.4vh,1rem) 0}
 .accent{color:var(--primary)}
 .lede{font-size:var(--body-size);line-height:1.65;color:var(--sub);max-width:56ch}
 .center{align-items:center;text-align:center}
 .center .lede{margin:0 auto}
 .slide-num{position:absolute;bottom:clamp(.8rem,2vh,1.4rem);right:var(--slide-padding);
   font-family:var(--font-display);font-size:var(--small-size);color:var(--hint)}
+/* 출처 한 줄 — 본문보다 확실히 작게, 왼쪽 아래 */
+.src{margin-top:clamp(.4rem,1.1vh,.85rem);font-size:clamp(.6rem,.88vw,.78rem);color:var(--hint);letter-spacing:.01em}
 
-/* double-bezel card */
+/* 이중 베젤 카드 */
 .bz{background:rgba(17,17,17,.035);border:1px solid rgba(17,17,17,.055);border-radius:clamp(17px,2.2vw,29px);padding:clamp(5px,.62vw,9px)}
 .bz>.in{background:var(--card);border-radius:clamp(13px,1.7vw,23px);height:100%;
   padding:clamp(1rem,2.2vw,2rem);box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 1px 2px rgba(17,17,17,.03)}
 .bz .ic{width:clamp(36px,3.7vw,50px);height:clamp(36px,3.7vw,50px);border-radius:15px;display:flex;align-items:center;justify-content:center;
-  font-size:clamp(1.1rem,2vw,1.5rem);margin-bottom:clamp(.6rem,1.4vh,1.15rem);background:var(--primary-bg)}
+  font-size:clamp(1.1rem,2vw,1.5rem);margin-bottom:clamp(.5rem,1.2vh,1rem);background:var(--primary-bg)}
 .bz h3{font-size:clamp(1.05rem,1.85vw,1.38rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.35em}
 .bz p{font-size:var(--small-size);line-height:1.55;color:var(--sub)}
 
-/* reveal animation */
+/* reveal 애니메이션 — .slide.visible 이 붙을 때 순차 등장 */
 .reveal{opacity:0;transform:translateY(28px);filter:blur(6px);
   transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
 .slide.visible .reveal{opacity:1;transform:translateY(0);filter:blur(0)}
 .reveal:nth-child(1){transition-delay:.05s}.reveal:nth-child(2){transition-delay:.15s}
 .reveal:nth-child(3){transition-delay:.25s}.reveal:nth-child(4){transition-delay:.35s}
 .reveal:nth-child(5){transition-delay:.45s}
+/* 카드 단위 순차 등장 (슬라이드 4의 3단 빌드) */
+.stagger>*{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.slide.visible .stagger>*{opacity:1;transform:translateY(0)}
+.slide.visible .stagger>*:nth-child(1){transition-delay:.20s}
+.slide.visible .stagger>*:nth-child(2){transition-delay:.45s}
+.slide.visible .stagger>*:nth-child(3){transition-delay:.70s}
 
-/* =========================================== TITLE SLIDE =========================================== */
+/* ===========================================
+   1. TITLE — 폰 목업. 내부가 전부 em이라 .phone-shell의 font-size 하나로 비례 확대/축소된다.
+   =========================================== */
 .title-slide .slide-content{align-items:center;text-align:center}
 .logo-row{display:flex;align-items:center;gap:clamp(.5rem,1vw,.9rem)}
 .logo-row img{width:clamp(48px,5.6vw,76px);height:clamp(48px,5.6vw,76px);border-radius:22%}
 .logo-row span{font-family:var(--font-display);font-weight:700;font-size:clamp(1.7rem,3.5vw,2.9rem);position:relative;top:2px}
 .title-meta{font-size:var(--small-size);color:var(--hint);margin-top:clamp(.8rem,2vh,1.5rem)}
-
-/* =========================================== 표지 폰 목업 ===========================================
-   내부를 전부 em으로 잡아, .phone-shell의 font-size 하나로 전체가 비례 확대/축소된다. */
 .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(1rem,3vw,3.5rem);
   align-items:center;width:100%;text-align:left}
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
@@ -131,16 +147,15 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 .ptab{display:flex;justify-content:space-around;background:#fff;border-top:1px solid var(--divider);
   padding:.75em 0 1.15em;margin:.5em -1.1em 0}
 .ptab b{font-size:.68em;font-weight:600;color:var(--hint);display:flex;flex-direction:column;
-  align-items:center;gap:.3em}
+  align-items:center;gap:.3em;position:relative}
 .ptab b.on{color:var(--primary)}
 .ptab b span{font-size:1.5em}
-/* 떠 있는 번역 태그 */
+.ptab b .dot{position:absolute;top:-.1em;right:.35em;width:.5em;height:.5em;border-radius:99px;background:var(--warn)}
 .float-tag{position:absolute;z-index:5;background:rgba(255,255,255,.92);
   backdrop-filter:blur(12px);border:1px solid rgba(17,17,17,.06);border-radius:1.1em;
   box-shadow:0 2em 4em -1.6em rgba(17,17,17,.3);padding:.75em 1.1em;
   font-size:clamp(9px,1.35vh,13px);font-weight:700;top:11%;right:-1%;transform:rotate(-2deg)}
 .float-tag small{display:block;font-weight:500;color:var(--sub);font-size:.82em;margin-top:.2em}
-/* 뒤에 겹치는 채팅 폰 */
 .phone-mini{position:absolute;left:-6%;bottom:-4%;z-index:6;
   font-size:clamp(7px,1.15vh,11px);
   background:rgba(17,17,17,.05);border:1px solid rgba(17,17,17,.07);
@@ -159,96 +174,166 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 .mbub.me{background:var(--primary);color:#fff;margin-left:auto}
 .mbub .tr{display:block;margin-top:.3em;padding-top:.3em;border-top:1px dashed rgba(17,17,17,.14);
   color:var(--sub);font-size:.9em}
-/* problem cards */
-.pain .in{border-top:3px solid var(--primary-border)}
-.pain .stat{display:block;margin-top:.55em;font-size:clamp(.58rem,.85vw,.75rem);font-weight:700;color:var(--primary)}
-.big-num{font-family:var(--font-display);font-size:clamp(1.2rem,2.6vw,2rem);font-weight:700;color:var(--primary)}
-/* app reference chips (competitor/benchmark apps I actually used) */
-.chip-row{display:flex;gap:clamp(.35rem,.8vw,.6rem);flex-wrap:wrap;margin-top:var(--element-gap)}
+
+/* ===========================================
+   2. TARGET — 좌 / 중앙 로고 / 우 의 다리(bridge) 구조
+   =========================================== */
+.bridge{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:clamp(.6rem,2vw,2rem);margin-top:var(--content-gap)}
+.bridge .side{text-align:center}
+.bridge .side .ic{margin:0 auto clamp(.5rem,1.2vh,1rem)}
+.bridge .side h3{font-size:clamp(1rem,1.85vw,1.45rem)}
+.hub{display:flex;flex-direction:column;align-items:center;gap:.5em}
+/* 주의: -clamp() 는 무효라 선언 전체가 무시된다. 음수는 calc(-1 * clamp(...))로 쓴다. */
+.hub img{width:clamp(52px,6.5vw,92px);height:clamp(52px,6.5vw,92px);border-radius:24%;
+  box-shadow:0 clamp(10px,2vw,24px) clamp(20px,4vw,48px) calc(-1 * clamp(6px,1.2vw,14px)) rgba(58,79,149,.35)}
+.hub span{font-family:var(--font-display);font-weight:700;font-size:clamp(1rem,1.9vw,1.5rem)}
+.hub .arrows{font-size:clamp(.9rem,1.6vw,1.3rem);color:var(--primary);letter-spacing:.4em}
+@media(max-width:820px){.bridge{grid-template-columns:1fr}.hub .arrows{transform:rotate(90deg)}}
+
+/* ===========================================
+   3. ORIGIN — 두 경험이 아래로 수렴하는 Y 구조
+   =========================================== */
+.conv{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.6rem,1.6vw,1.4rem);margin-top:var(--content-gap)}
+.conv .bz .in{text-align:center;padding:clamp(.8rem,1.8vw,1.5rem)}
+.conv-arrows{display:flex;justify-content:center;gap:22%;color:var(--primary-border);
+  font-size:clamp(1rem,2vw,1.6rem);line-height:1;margin:clamp(.3rem,.8vh,.6rem) 0}
+.conv-out{display:flex;justify-content:center}
+.conv-out .pill{display:inline-flex;align-items:center;gap:.6em;background:var(--primary);color:#fff;
+  border-radius:999px;padding:clamp(.5rem,1.1vh,.8rem) clamp(1.3rem,2.6vw,2.2rem);
+  font-family:var(--font-display);font-weight:700;font-size:clamp(1.05rem,2vw,1.6rem);
+  box-shadow:0 clamp(12px,2.4vw,26px) clamp(22px,4vw,44px) calc(-1 * clamp(8px,1.4vw,16px)) rgba(58,79,149,.5)}
+.chip-row{display:flex;gap:clamp(.35rem,.8vw,.6rem);flex-wrap:wrap;margin-top:var(--content-gap);justify-content:center}
 .app-chip{background:var(--card);border:1px solid var(--divider);border-radius:999px;
   padding:.5em 1.25em;font-size:var(--small-size);font-weight:600;color:var(--sub)}
-/* pain → solution mapping rows */
-.map-list{display:flex;flex-direction:column;gap:clamp(.35rem,.9vh,.7rem);margin-top:var(--content-gap)}
-.map-row{display:grid;grid-template-columns:1fr auto 1.25fr;align-items:center;gap:clamp(.5rem,1.2vw,1rem);
-  background:var(--card);border:1px solid var(--divider);border-radius:14px;
-  padding:clamp(.5rem,1.1vh,.85rem) clamp(.8rem,1.5vw,1.2rem)}
-.map-row .p{font-size:var(--small-size);font-weight:700;letter-spacing:-.01em}
-.map-row .arr{color:var(--primary);font-weight:700}
-.map-row .s{font-size:var(--small-size);color:var(--sub);line-height:1.45}
-.map-row .s b{color:var(--primary-press);font-weight:700}
-@media(max-width:600px){.map-row{grid-template-columns:1fr;gap:.15rem}.map-row .arr{display:none}}
-/* 페인포인트 → 해결 카드 (운영자/참가자) */
+
+/* ===========================================
+   4·5. PAIN → SOLUTION 카드
+   상단 절반 = 문제(회색) / 하단 절반 = PotentO 해결(흰 배경 + primary)
+   =========================================== */
 .pp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.1vw,.9rem);margin-top:var(--content-gap)}
-@media(max-width:820px){.pp-grid{grid-template-columns:1fr}}
-.pp .in{display:flex;flex-direction:column;height:100%;padding:clamp(.9rem,1.85vw,1.65rem)}
+.pp-grid.two{grid-template-columns:repeat(2,1fr)}
+@media(max-width:820px){.pp-grid,.pp-grid.two{grid-template-columns:1fr}}
+.pp .in{display:flex;flex-direction:column;height:100%;padding:clamp(.85rem,1.7vw,1.5rem)}
 .pp .no{font-family:var(--font-display);font-size:clamp(.76rem,1.15vw,1rem);font-weight:700;
-  color:var(--primary);letter-spacing:.14em;margin-bottom:.35em}
-.pp h3{font-size:clamp(1.05rem,1.8vw,1.4rem);margin-bottom:.4em;letter-spacing:-.02em}
+  color:var(--primary);letter-spacing:.14em;margin-bottom:.3em}
+.pp h3{font-size:clamp(1.05rem,1.8vw,1.4rem);margin-bottom:.35em;letter-spacing:-.02em}
 .pp .prob{font-size:var(--small-size);line-height:1.5;color:var(--sub)}
+.pp .prob b{color:var(--ink);font-weight:700}
 .pp .sol{margin-top:auto;padding-top:clamp(.45rem,1.1vh,.8rem);
   border-top:1px dashed var(--primary-border);list-style:none}
-.pp .sol li{font-size:var(--small-size);line-height:1.45;display:flex;gap:.4em;
-  align-items:flex-start;margin-top:.35em}
-.tag-now,.tag-next{flex:0 0 auto;font-size:.75em;font-weight:700;border-radius:999px;
-  padding:.2em .65em;margin-top:.15em;white-space:nowrap}
-.tag-now{background:var(--primary);color:#fff}
-.tag-next{background:var(--grayTag,#F2F2F2);color:var(--sub);border:1px solid var(--divider)}
-.side-label{display:inline-flex;align-items:center;gap:.5em;font-size:var(--small-size);
-  font-weight:700;color:var(--primary-press)}
-/* benchmark map */
-.bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--content-gap)}
-.bench-grid .bz .in{padding:clamp(.7rem,1.4vw,1.2rem)}
-.bench-grid h3{font-size:clamp(.8rem,1.3vw,1rem)}
-.bench-grid .src{font-size:clamp(.6rem,.9vw,.78rem);font-weight:700;color:var(--primary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4em}
+.pp .sol .sol-head{font-size:clamp(.66rem,.95vw,.82rem);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--primary);margin-bottom:.35em}
+.pp .sol li{font-size:var(--small-size);line-height:1.45;display:flex;gap:.45em;
+  align-items:flex-start;margin-top:.3em}
+.pp .sol li::marker{content:''}
+.tick{color:var(--primary);font-weight:700;flex:0 0 auto}
+.tag-next{flex:0 0 auto;font-size:.72em;font-weight:700;border-radius:999px;padding:.2em .6em;
+  margin-top:.15em;white-space:nowrap;background:#F2F2F2;color:var(--sub);border:1px solid var(--divider)}
+/* 슬라이드 핵심 한 줄 — .lede(회색)로 두면 각주처럼 읽힌다 */
+.key-line{margin-top:clamp(.5rem,1.3vh,1rem);font-size:var(--body-size);font-weight:700;
+  letter-spacing:-.015em;color:var(--ink)}
+/* 슬라이드 4 ①의 숫자 강조 블록 — 이 장에서 가장 먼저 눈에 들어와야 한다 */
+.statbox{display:flex;align-items:center;gap:clamp(.4rem,1vw,.8rem);background:var(--primary-bg);
+  border:1px solid var(--primary-border);border-radius:12px;
+  padding:clamp(.45rem,1.1vh,.75rem) clamp(.6rem,1.2vw,1rem);margin-top:clamp(.5rem,1.2vh,.85rem)}
+.statbox .n{font-family:var(--font-display);font-weight:700;color:var(--primary);
+  font-size:clamp(.95rem,1.75vw,1.45rem);line-height:1.1}
+.statbox .n small{display:block;font-family:var(--font-body);font-weight:600;
+  font-size:clamp(.58rem,.85vw,.72rem);color:var(--sub);letter-spacing:0}
+.statbox .to{color:var(--primary);font-size:clamp(.9rem,1.6vw,1.3rem);font-weight:700}
+/* 슬라이드 5 ① 번역 Before / After */
+.tr-demo{margin-top:clamp(.5rem,1.2vh,.85rem);border:1px solid var(--divider);border-radius:12px;overflow:hidden}
+.tr-demo div{padding:clamp(.4rem,1vh,.65rem) clamp(.55rem,1.1vw,.85rem);font-size:clamp(.68rem,1.02vw,.9rem);line-height:1.4}
+.tr-demo .b4{background:#F4F4F4;color:var(--sub)}
+.tr-demo .af{background:var(--primary-bg);color:var(--primary-press);font-weight:700;
+  border-top:1px dashed var(--primary-border)}
+.tr-demo em{display:block;font-style:normal;font-size:.78em;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;opacity:.7;margin-bottom:.15em}
+/* 슬라이드 5 ② DM 권한 관계도 */
+.dm-rows{margin-top:clamp(.5rem,1.2vh,.85rem);display:flex;flex-direction:column;gap:.28em}
+.dm-rows div{display:flex;justify-content:space-between;align-items:center;gap:.5em;
+  border-radius:9px;padding:clamp(.3rem,.75vh,.5rem) clamp(.5rem,1vw,.8rem);
+  font-size:clamp(.68rem,1.02vw,.9rem);font-weight:600}
+.dm-rows .yes{background:var(--ok-bg);color:#1E7A45}
+.dm-rows .no{background:#FBEDEA;color:#A8402A}
+.dm-rows b{font-weight:700}
+/* ===========================================
+   6. BUSINESS MODEL — 유형 라벨 띠 + 상태 배지
+   =========================================== */
+.bm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--content-gap)}
+@media(max-width:820px){.bm-grid{grid-template-columns:1fr}}
+.bm .kind{display:block;font-size:clamp(.66rem,.98vw,.85rem);font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--primary);background:var(--primary-bg);
+  border:1px solid var(--primary-border);border-radius:999px;padding:.35em 1em;width:max-content;
+  margin-bottom:clamp(.5rem,1.2vh,.9rem)}
+.bm .in{display:flex;flex-direction:column;height:100%}
+.bm p{margin-bottom:clamp(.6rem,1.4vh,1rem)}
+/* margin-top:auto 로 카드 바닥에 붙인다 — 뒤에서 margin-top을 다시 주면 이 효과가 깨진다 */
+.badge{margin-top:auto;align-self:flex-start;font-size:clamp(.66rem,.95vw,.82rem);font-weight:700;
+  border-radius:999px;padding:.3em .9em}
+.badge.done{background:var(--ok-bg);color:#1E7A45;border:1px solid #BFE6CE}
+.badge.plan{background:#F2F2F2;color:var(--sub);border:1px solid var(--divider)}
 
-/* flow diagram */
-.flow{display:flex;align-items:center;gap:clamp(.4rem,1vw,.8rem);flex-wrap:wrap;margin-top:var(--element-gap)}
-.flow .node{background:var(--primary-bg);border:1px solid var(--primary-border);border-radius:14px;
-  padding:clamp(.5rem,1.2vw,.9rem) clamp(.8rem,1.6vw,1.3rem);font-size:var(--small-size);font-weight:700;color:var(--primary-press)}
-.flow .node small{display:block;font-weight:500;font-size:.82em;color:var(--primary);margin-top:2px}
-.flow .arr{color:var(--hint)}
+/* ===========================================
+   7. STATUS — 좌(완료) 밀도 > 우(진행 중) 밀도. 대비 자체가 메시지다.
+   =========================================== */
+.status{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(.6rem,1.6vw,1.4rem);margin-top:var(--content-gap)}
+@media(max-width:820px){.status{grid-template-columns:1fr}}
+.status .head{font-family:var(--font-display);font-weight:700;font-size:clamp(.9rem,1.5vw,1.2rem);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:clamp(.5rem,1.2vh,.9rem)}
+.status .done-head{color:var(--primary)}
+.status .now-head{color:var(--sub)}
+.f-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:clamp(.3rem,.8vh,.55rem) clamp(.5rem,1.2vw,1rem)}
+.f-list.one{grid-template-columns:1fr}
+.f-list li{display:flex;align-items:center;gap:.5em;font-size:var(--body-size);font-weight:600;line-height:1.35}
+.f-list .tick{color:var(--primary);font-size:1.05em}
+.f-list.now li{font-weight:500;color:var(--sub)}
+.f-list.now .dot{width:.5em;height:.5em;border-radius:99px;background:var(--primary-border);flex:0 0 auto}
 
-/* chat bubbles */
-.bub{border-radius:14px;padding:.6em 1em;font-size:var(--small-size);max-width:34ch;line-height:1.5}
-.bub.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
-.bub.you{background:#F0F0F0;border-bottom-left-radius:4px}
-.bub .tr{display:block;margin-top:.4em;padding-top:.4em;border-top:1px dashed rgba(17,17,17,.15);color:var(--sub);font-size:.9em}
-.bub.me .tr{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.85)}
-
-/* demo slide */
-.url-pill{display:inline-flex;align-items:center;gap:.6em;background:var(--card);border:1px solid var(--primary-border);
-  border-radius:999px;padding:.7em 1.5em;font-family:var(--font-display);font-weight:600;
-  font-size:clamp(.85rem,2vw,1.4rem);color:var(--primary-press);box-shadow:0 16px 40px -18px rgba(58,79,149,.45);text-decoration:none}
-.url-pill:hover{background:var(--primary-bg)}
-.qr-wrap{display:flex;gap:clamp(1rem,3vw,2.5rem);align-items:center;justify-content:center;margin-top:var(--content-gap)}
-.qr-box{background:#fff;border:1px solid var(--divider);border-radius:18px;padding:clamp(.6rem,1.2vw,1rem);
-  box-shadow:0 20px 44px -22px rgba(17,17,17,.25);display:flex;flex-direction:column;align-items:center;gap:.5em}
-.qr-box img{width:clamp(110px,19vh,180px);height:clamp(110px,19vh,180px)}
-.qr-box span{font-size:var(--small-size);font-weight:600;color:var(--primary-press)}
-/* ghost brand watermark on title slide */
-.watermark{position:absolute;bottom:-.12em;left:50%;transform:translateX(-50%);
-  font-family:var(--font-display);font-weight:700;line-height:.8;white-space:nowrap;
-  font-size:clamp(6rem,17vw,15rem);color:transparent;-webkit-text-stroke:1.5px rgba(58,79,149,.12);
-  pointer-events:none;user-select:none}
-
-/* stats */
-.stat b{display:block;font-family:var(--font-display);font-size:clamp(1.3rem,3vw,2.3rem);font-weight:700;color:var(--primary)}
-.stat span{font-size:var(--small-size);color:var(--sub)}
-
-/* roadmap */
-.road{display:flex;gap:clamp(.5rem,1.2vw,1rem);flex-wrap:wrap}
-.road .bz{flex:1;min-width:min(100%,220px)}
-.road .tag{display:inline-block;font-size:clamp(.68rem,1vw,.85rem);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  background:var(--primary-bg);color:var(--primary);border-radius:999px;padding:.35em 1em;margin-bottom:.7em}
+/* ===========================================
+   8. ROADMAP — 단계 전환 띠 + 3노드 타임라인
+   =========================================== */
+.stage-bar{display:flex;align-items:center;gap:clamp(.4rem,1.2vw,1rem);flex-wrap:wrap;
+  margin-top:var(--element-gap)}
+.stage{display:inline-flex;align-items:center;gap:.5em;border-radius:999px;
+  padding:.4em 1.1em;font-size:var(--small-size);font-weight:700}
+.stage.past{background:var(--ok-bg);color:#1E7A45}
+.stage.on{background:var(--primary);color:#fff}
+.stage.future{background:#F2F2F2;color:var(--hint);border:1px solid var(--divider)}
+.stage-bar .arr{color:var(--hint)}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--content-gap)}
+@media(max-width:820px){.road{grid-template-columns:1fr}}
+.road .tag{display:inline-block;font-size:clamp(.68rem,1vw,.85rem);font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;background:var(--primary-bg);color:var(--primary);border-radius:999px;
+  padding:.35em 1em;margin-bottom:.7em}
 .road .now .tag{background:var(--primary);color:#fff}
+.road .goal .in{background:linear-gradient(135deg,#2D3E7A,#3A4F95);color:#fff}
+.road .goal .tag{background:rgba(255,255,255,.16);color:#fff}
+.road .goal p,.road .goal li{color:rgba(255,255,255,.82)}
+.road ul{list-style:none;margin-top:.2em}
+.road li{font-size:var(--small-size);line-height:1.5;color:var(--sub);display:flex;gap:.45em}
 
-/* closing */
+/* ===========================================
+   9. CLOSING — dark. 시각자료 없이 타이포와 여백만.
+   =========================================== */
 .dark{background:linear-gradient(135deg,#151a2e 0%,#2D3E7A 55%,#3A4F95 100%);color:#fff}
 .dark h1,.dark h2{color:#fff}
 .dark .lede{color:rgba(255,255,255,.75)}
 .dark .slide-num{color:rgba(255,255,255,.4)}
+.next-row{display:flex;gap:clamp(.35rem,.9vw,.7rem);flex-wrap:wrap;justify-content:center}
+.next-row span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;padding:.4em 1.1em;font-size:var(--small-size);font-weight:600;color:#fff}
+.closing-en{font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,2.2vw,1.75rem);
+  color:rgba(255,255,255,.7);margin-top:clamp(.6rem,1.6vh,1.2rem);letter-spacing:.01em}
+.launch-pill{display:inline-flex;align-items:center;gap:.6em;margin-top:clamp(1rem,3vh,2.2rem);
+  background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;
+  padding:.65em 1.7em;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(.85rem,1.7vw,1.3rem);color:#fff}
 
-/* =========================================== CHROME (progress / dots / hint) =========================================== */
+/* ===========================================
+   CHROME — 진행바 / 네비 점 / 힌트
+   =========================================== */
 .progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--primary);width:0;z-index:100;transition:width .2s var(--ease)}
 .nav-dots{position:fixed;right:clamp(8px,1.5vw,20px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:100}
 .nav-dots button{width:8px;height:8px;border-radius:99px;border:none;background:rgba(17,17,17,.15);cursor:pointer;padding:0;transition:all .4s var(--ease)}
@@ -262,15 +347,16 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 <nav class="nav-dots" id="dots" aria-label="슬라이드 이동"></nav>
 <p class="keyboard-hint">← → 또는 스크롤로 이동</p>
 
-<!-- 1. TITLE -->
+<!-- ============ 1. TITLE · 0:00–0:15 ============
+     말로만: 인사와 본인 소개. 슬라이드에는 이름만 둔다. -->
 <section class="slide title-slide">
   <div class="slide-content">
     <div class="hero-grid">
       <div class="hero-copy">
         <div class="logo-row reveal"><img src="../icon.png" alt="PotentO 로고"><span>potento</span></div>
         <h1 class="reveal">관심사로 연결되는<br><span class="accent">한국 생활</span>의 시작</h1>
-        <p class="lede reveal">한국 거주를 희망하는 외국인과<br>글로벌 교류를 원하는 2030을 잇는 커뮤니티</p>
-        <p class="title-meta reveal">중간평가 발표 · 2026. 08. 14</p>
+        <p class="lede reveal">한국에 거주·장기 체류하는 외국인과<br>국제교류를 원하는 2030 한국인을 잇는 커뮤니티</p>
+        <p class="title-meta reveal">OOO · 중간평가 발표 · 2026. 08. 14</p>
       </div>
       <div class="phone-stage reveal" aria-hidden="true">
         <div class="float-tag">🌐 자동 번역<small>콘텐츠 단위 한 ↔ 영</small></div>
@@ -307,7 +393,7 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
               </div>
             </div>
             <div class="ptab">
-              <b class="on"><span>⌂</span>홈</b><b><span>◎</span>지도</b><b><span>💬</span>채팅</b><b><span>☰</span>프로필</b>
+              <b class="on"><span>⌂</span>홈</b><b><span>◎</span>지도</b><b><span>💬</span><i class="dot"></i>채팅</b><b><span>☰</span>프로필</b>
             </div>
           </div>
         </div></div></div>
@@ -317,191 +403,300 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
   <span class="slide-num">01</span>
 </section>
 
-<!-- 2. TARGET -->
+<!-- ============ 2. TARGET · 0:15–0:30 ============
+     핵심: 두 사용자군이 PotentO를 사이에 두고 만난다.
+     말로만: «누구든지 쓸 수 있다»는 말하지 않는다. 질문 나올 때만. -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Target</span>
     <h2 class="reveal">누구를 위한 앱인가</h2>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><div class="ic">🌏</div><h3>한국 거주를 희망하는 외국인</h3><p>체류 외국인 278만 명. 이들이 꼽은 한국 생활의 어려움 1위는 «언어», 그다음이 «외로움»입니다.</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">🤝</div><h3>글로벌 국제교류를 희망하는 2030</h3><p>한국에서 세계와 만나고 싶은 청년층. 언어교류는 이미 검증된 수요입니다.</p></div></div>
+    <div class="bridge reveal">
+      <div class="bz side"><div class="in">
+        <div class="ic">🌏</div>
+        <h3>한국에 거주하거나<br>장기 체류하는 외국인</h3>
+      </div></div>
+      <div class="hub">
+        <div class="arrows">→&nbsp;&nbsp;←</div>
+        <img src="../icon.png" alt="PotentO 로고">
+        <span>potento</span>
+      </div>
+      <div class="bz side"><div class="in">
+        <div class="ic">🤝</div>
+        <h3>국제교류를 원하는<br>2030 한국인</h3>
+      </div></div>
     </div>
-    <p class="lede reveal" style="margin-top:var(--content-gap)">컨셉은 이렇지만, <b>사실 모임을 원하는 누구든지 사용할 수 있는 앱입니다.</b> 스터디도, 운동 모임도 열 수 있습니다. 다만 <b>처음 들어가는 문</b>을 기존 앱들이 못 푸는 «외국인과의 교류»로 잡았습니다.</p>
   </div>
   <span class="slide-num">02</span>
 </section>
 
-<!-- 3. ORIGIN -->
+<!-- ============ 3. ORIGIN · 0:30–1:10 ============
+     핵심: 직접 참가하고 운영하면서 발견한 문제에서 시작했다.
+     말로만: 어떤 커뮤니티인지. 이름·규모는 슬라이드에 넣지 않는다(비공개). -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Origin</span>
     <h2 class="reveal">직접 운영하고,<br><span class="accent">직접 써보며</span> 찾은 문제들</h2>
-    <p class="lede reveal">저는 외국인 오프라인 커뮤니티를 직접 운영하고 있습니다. 그리고 여러 모임 앱들을 직접 사용하고 분석하면서 겪은 페인포인트를 기반으로 앱을 개발했습니다.</p>
-    <div class="chip-row reveal">
-      <span class="app-chip">Meetup</span><span class="app-chip">소모임</span><span class="app-chip">문토</span>
-      <span class="app-chip">당근 모임</span><span class="app-chip">Nomad Table</span><span class="app-chip">Soo House</span>
+    <div class="reveal">
+      <div class="conv">
+        <div class="bz"><div class="in">
+          <h3>🙋 참가자 경험</h3>
+          <p>여러 모임 앱을 직접 사용</p>
+        </div></div>
+        <div class="bz"><div class="in">
+          <h3>🏠 호스트 경험</h3>
+          <p>외국인 오프라인 커뮤니티 직접 운영</p>
+        </div></div>
+      </div>
+      <div class="conv-arrows"><span>↘</span><span>↙</span></div>
+      <div class="conv-out"><span class="pill">potento</span></div>
+      <div class="chip-row">
+        <span class="app-chip">Meetup</span><span class="app-chip">소모임</span><span class="app-chip">문토</span>
+        <span class="app-chip">당근 모임</span><span class="app-chip">Nomad Table</span><span class="app-chip">Soo House</span>
+      </div>
     </div>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><h3>🏠 운영자 입장의 문제</h3><p>모임을 여는 쪽 — 노쇼, 연락의 부재, 첫 그룹 개설의 부담</p></div></div>
-      <div class="bz"><div class="in"><h3>🙋 참가자 입장의 문제</h3><p>모임에 들어가는 쪽 — 언어 장벽, 신뢰 문제, 일정 겹침</p></div></div>
-    </div>
-    <p class="lede reveal" style="margin-top:var(--element-gap);font-size:var(--small-size)">지금 구현이 된 것도 있고, 배포 후에 구현할 부분들도 있습니다.</p>
   </div>
   <span class="slide-num">03</span>
 </section>
 
-<!-- 4. HOST PAIN POINTS -->
+<!-- ============ 4. HOST PAIN POINTS · 1:10–2:55 ============
+     이 덱에서 가장 긴 슬라이드(105초). .stagger로 ①→②→③ 순차 등장시켜
+     시선이 말하는 카드에만 머물게 한다.
+     말로만: 개인 경험(신청 인원과 실제 참석 차이), 소모임 가격, 보증금, 승인제 상세. -->
 <section class="slide">
   <div class="slide-content">
     <span class="eyebrow reveal">Host</span>
     <h2 class="reveal">운영자 입장의 <span class="accent">세 가지 문제</span></h2>
-    <div class="pp-grid reveal">
+    <div class="pp-grid stagger">
       <div class="bz pp"><div class="in">
         <div class="no">PAIN 01</div>
         <h3>노쇼</h3>
-        <p class="prob">참가 신청을 하더라도 실제로 오지 않습니다. 당일까지 몇 명이 올지 알 수 없어 장소 예약도 준비도 어렵습니다. <b>무료 모임 노쇼율은 40~60%.</b></p>
+        <p class="prob">신청 인원과 <b>실제 참석 인원이 다릅니다.</b> 당일까지 몇 명이 올지 알 수 없어 장소 예약도 준비도 어렵습니다.</p>
+        <div class="statbox">
+          <span class="n">40~50%<small>무료 이벤트</small></span>
+          <span class="to">→</span>
+          <span class="n">70~85%<small>참가비 있을 때</small></span>
+        </div>
         <ul class="sol">
-          <li><span class="tag-now">구현</span><span>참가 승인제 — 호스트가 보고 승인</span></li>
-          <li><span class="tag-now">구현</span><span>전날 저녁 참석 확인 알림</span></li>
-          <li><span class="tag-next">배포 후</span><span>유료 모임으로 확실하게</span></li>
+          <li class="sol-head">PotentO</li>
+          <li><span class="tick">✓</span><span>전날 참석 확인 알림</span></li>
+          <li><span class="tick">✓</span><span>일정 중복 경고</span></li>
+          <li><span class="tick">✓</span><span>승인제 운영 선택</span></li>
+          <li><span class="tag-next">예정</span><span>유료 모임 · 선택적 보증금</span></li>
         </ul>
       </div></div>
       <div class="bz pp"><div class="in">
         <div class="no">PAIN 02</div>
         <h3>연락의 부재</h3>
-        <p class="prob">지금 쓰는 Meetup에서는 사용자들이 메시지를 잘 확인하지 않습니다. <b>눈에 띄지 않는 가장 오른쪽에 메시지 탭이 있어서</b> 그런 것 같기도 합니다.</p>
+        <p class="prob">공지를 올려도 모르고 오는 일이 많습니다. 탭 위치 탓인 줄 알았는데, <b>참가 버튼을 누르면 당일까지 앱에 다시 들어올 이유가 없다는 것</b>이 더 큰 이유였습니다.</p>
         <ul class="sol">
-          <li><span class="tag-now">구현</span><span>채팅을 하단 탭 안쪽에 배치</span></li>
-          <li><span class="tag-now">구현</span><span>안 읽은 메시지 탭 표시</span></li>
-          <li><span class="tag-now">구현</span><span>모임·그룹·개인 메시지 한 화면</span></li>
+          <li class="sol-head">PotentO</li>
+          <li><span class="tick">✓</span><span>채팅을 주요 하단 탭에 · 안 읽음 표시</span></li>
+          <li><span class="tick">✓</span><span>모임 · 그룹 · DM 한 화면</span></li>
+          <li><span class="tick">✓</span><span><b>푸시 알림</b> — 앱에 없어도 닿도록</span></li>
         </ul>
       </div></div>
       <div class="bz pp"><div class="in">
         <div class="no">PAIN 03</div>
-        <h3>첫 그룹 개설의 부담</h3>
-        <p class="prob">모임 하나 여는 데 신경 쓸 게 너무 많습니다. 게다가 <b>Meetup은 모임장에게 월 $19.99, 소모임은 월 15,500원</b> — 노출시키려면 결국 유료입니다.</p>
+        <h3>개설의 부담</h3>
+        <p class="prob">모임 하나 여는 데 신경 쓸 게 많고, <b>본격적으로 운영하는 단계부터 비용 부담</b>이 생깁니다.</p>
+        <div class="statbox">
+          <span class="n">$29.99~<small>Meetup Organizer 월 요금</small></span>
+        </div>
         <ul class="sol">
-          <li><span class="tag-now">구현</span><span>개설 무료</span></li>
-          <li><span class="tag-now">구현</span><span>최대한 가벼운 개설 흐름</span></li>
-          <li><span class="tag-next">배포 후</span><span>운영자 노출 지원</span></li>
+          <li class="sol-head">PotentO</li>
+          <li><span class="tick">✓</span><span>그룹 개설 무료</span></li>
+          <li><span class="tick">✓</span><span>최대한 가벼운 개설 과정</span></li>
         </ul>
       </div></div>
     </div>
+    <!-- 이 슬라이드의 핵심 메시지 — 각주처럼 보이면 안 되므로 본문 색·굵기를 준다 -->
+    <p class="key-line reveal">
+      초기 플랫폼에서 중요한 것은 <span class="accent">«모임을 열어줄 사람»</span>입니다
+    </p>
+    <p class="src">출처: Meetup 공식 블로그(참석률) · Meetup Help Center(요금, 제한적 무료 플랜 별도 존재)</p>
   </div>
   <span class="slide-num">04</span>
 </section>
 
-<!-- 5. MEMBER PAIN POINTS -->
+<!-- ============ 5. PARTICIPANT PAIN POINTS · 2:55–4:10 ============
+     핵심: 외국인이 «읽을 수 있고», 안심하고 «만날 수 있게».
+     말로만: DM 규칙 세부(비공개), 신고·차단 동작 방식. -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Member</span>
-    <h2 class="reveal">참가자 입장의 <span class="accent">세 가지 문제</span></h2>
-    <div class="pp-grid reveal">
+    <span class="eyebrow reveal">Participant</span>
+    <h2 class="reveal">참가자 입장의 <span class="accent">두 가지 문제</span></h2>
+    <div class="pp-grid two stagger">
       <div class="bz pp"><div class="in">
         <div class="no">PAIN 01</div>
         <h3>언어 장벽</h3>
-        <p class="prob">소모임·문토를 확인해보니 <b>UI는 번역되지만 그룹명·모임 내용 같은 콘텐츠 단위 번역이 없었습니다.</b> 버튼만 영어가 되고 정작 모임 제목은 한국어 그대로입니다.</p>
+        <p class="prob">앱 UI는 영어를 지원하지만 <b>사용자가 작성한 콘텐츠는 번역되지 않습니다.</b> 제목과 소개가 한국어 그대로라 외국인이 모임을 탐색하기 어렵습니다.</p>
+        <div class="tr-demo">
+          <div class="b4"><em>Before</em>한강 피크닉 &amp; 언어교환 · 매주 토요일 오후 2시</div>
+          <div class="af"><em>After</em>Han River Picnic &amp; Language Exchange · Every Sat 2PM</div>
+        </div>
         <ul class="sol">
-          <li><span class="tag-now">구현</span><span>전체 한 · 영 설정</span></li>
-          <li><span class="tag-now">구현</span><span><b>콘텐츠 단위 번역</b> — 제목·소개 자동 번역</span></li>
-          <li><span class="tag-now">구현</span><span>채팅 즉시 번역</span></li>
+          <li class="sol-head">PotentO</li>
+          <li><span class="tick">✓</span><span>UI 한 · 영 전환</span></li>
+          <li><span class="tick">✓</span><span>제목 · 소개 자동 번역 저장</span></li>
+          <li><span class="tick">✓</span><span>채팅 즉시 번역</span></li>
         </ul>
       </div></div>
       <div class="bz pp"><div class="in">
         <div class="no">PAIN 02</div>
-        <h3>신뢰 문제</h3>
-        <p class="prob">처음 만나는 사람이라 <b>로맨스 스캠 같은 범죄에 노출</b>될 수 있습니다. 국내 피해액은 최근 1년 반 동안 1,380억 원 규모로 계속 늘고 있습니다.</p>
+        <h3>신뢰와 안전</h3>
+        <p class="prob">처음 보는 사람과 연결되기 때문에 <b>원치 않는 개인 메시지나 사적인 접근</b>이 생길 수 있습니다. 로맨스 스캠 피해액은 1년 반 동안 <b>1,380억 원</b>이었습니다.</p>
+        <!-- 정확한 권한 규칙은 싣지 않는다. 덱이 공개 URL로 영구히 남기 때문 (2026-08-14 결정).
+             «아무나 DM 못 한다»는 메시지만 전달하고, 세부는 발표에서 구두로. -->
+        <div class="dm-rows">
+          <div class="yes"><b>신뢰 관계 안에서만</b><span>✓ DM 가능</span></div>
+          <div class="no"><b>모르는 사람</b><span>✗ 불가</span></div>
+        </div>
         <ul class="sol">
-          <li><span class="tag-now">구현</span><span>1:1 메시지는 친구·호스트만</span></li>
-          <li><span class="tag-now">구현</span><span>신고 · 차단, 차단 시 메시지 가림</span></li>
-          <li><span class="tag-next">배포 후</span><span>본인인증 · 비자 인증</span></li>
-        </ul>
-      </div></div>
-      <div class="bz pp"><div class="in">
-        <div class="no">PAIN 03</div>
-        <h3>일정 겹침 (노쇼)</h3>
-        <p class="prob">여러 모임에 참여하다 보면 본인도 모르게 일정이 겹칩니다. 결국 한쪽은 못 가게 되고, <b>그게 노쇼가 됩니다.</b></p>
-        <ul class="sol">
-          <li><span class="tag-now">구현</span><span>참가 시 시간 겹침 경고</span></li>
-          <li><span class="tag-now">구현</span><span>전날 참석 확인 알림</span></li>
+          <li class="sol-head">PotentO</li>
+          <li><span class="tick">✓</span><span><b>제한된 1:1 메시지</b> — 아무나 보낼 수 없음</span></li>
+          <li><span class="tick">✓</span><span>신고 · 차단</span></li>
+          <li><span class="tag-next">예정</span><span>본인인증 + <b>선택형 신뢰 인증 배지</b></span></li>
         </ul>
       </div></div>
     </div>
+    <p class="src">출처: 경찰청 제출자료, 2024. 2 ~ 2025. 7</p>
   </div>
   <span class="slide-num">05</span>
 </section>
 
-<!-- 6. BUSINESS MODEL -->
+<!-- ============ 6. BUSINESS MODEL · 4:45–5:25 ============
+     핵심: 세 수익원의 «성격»이 다르다 — 노출 / 연결 / 거래.
+     말로만: 수수료율, 제휴 후보 업체명(둘 다 비공개). -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Business</span>
-    <h2 class="reveal">수익모델은 <span class="accent">세 가지</span>를 생각하고 있습니다</h2>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><div class="ic">💳</div><h3>유료 모임</h3><p>결제를 연동한 뒤 유료 모임 개설을 지원합니다. <b>노쇼 억제와 수익화를 동시에</b> 가져갈 수 있습니다.</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">✨</div><h3>For You</h3><p>외국인 정착을 돕는 서비스(부동산·어학원 등), 이벤트, 광고, 그리고 소상공인 <b>공간 대여</b>까지. 타깃이 명확해 제휴에 강점이 있습니다.</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">⭐</div><h3>프리미엄 회원제</h3><p>더 나은 탐색과 부가 기능을 원하는 사용자를 위한 구독 모델입니다.</p></div></div>
+    <span class="eyebrow reveal">Business Model</span>
+    <h2 class="reveal">성격이 다른 <span class="accent">세 가지</span> 수익원</h2>
+    <div class="bm-grid stagger">
+      <div class="bz bm"><div class="in">
+        <span class="kind">노출형 제휴</span>
+        <h3>For You 제휴 노출</h3>
+        <p>이벤트 · 공간, 그리고 <b>부동산 · 어학원 같은 외국인 정착 서비스</b>까지 홈 화면에서 큐레이션해 노출합니다.</p>
+        <span class="badge done">✓ 구현 완료</span>
+      </div></div>
+      <div class="bz bm"><div class="in">
+        <span class="kind">고객 연결형 제휴</span>
+        <h3>B2B 정착 서비스 제휴</h3>
+        <p>같은 파트너를 <b>노출에서 한 단계 더</b> — 실제 고객 연결까지 잇습니다. 타깃 채널이 명확한 것 자체가 자산입니다.</p>
+        <span class="badge plan">계획</span>
+      </div></div>
+      <div class="bz bm"><div class="in">
+        <span class="kind">거래</span>
+        <h3>유료 모임</h3>
+        <p>결제를 붙인 뒤 유료 모임을 지원하고, 노쇼가 중요한 모임에는 보증금 방식도 검토합니다.</p>
+        <span class="badge plan">계획</span>
+      </div></div>
     </div>
   </div>
   <span class="slide-num">06</span>
 </section>
 
-<!-- 7. CURRENT STATUS -->
+<!-- ============ 7. CURRENT STATUS · 5:25–5:50 ============
+     핵심: 아이디어 단계가 아니라 «제품이 있다».
+     좌(완료)가 꽉 차고 우(진행 중)가 짧아야 «거의 다 됐다»로 읽힌다.
+     말로만: 범위가 커졌고, 그래서 지금은 기능 추가를 멈추고 안정화 중. -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Now</span>
-    <h2 class="reveal">지금은 <span class="accent">안정화</span>에 집중하고 있습니다</h2>
-    <p class="lede reveal">계속 욕심을 부리다 보니 MVP 수준에서 개발하고자 했던 기능은 대부분 구현했습니다. 그런데 <b>기능이 많다 보니 테스트할 것도 많아졌습니다.</b></p>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><h3>🐛 오류 잡기</h3><p>숨어 있는 오류를 테스트를 통해 잡고 있습니다</p></div></div>
-      <div class="bz"><div class="in"><h3>⚙️ 안정화</h3><p>불안정하거나 어색한 부분을 안정적으로 작동하도록</p></div></div>
-      <div class="bz"><div class="in"><h3>📱 iOS 확인</h3><p>iOS 기기는 아직 테스트하지 않아 그 부분도 확인해야 합니다</p></div></div>
-      <div class="bz"><div class="in"><h3>🎨 디자인 수정</h3><p>디자인도 다듬을 예정입니다</p></div></div>
+    <span class="eyebrow reveal">Current Status</span>
+    <h2 class="reveal">주요 기능 <span class="accent">대부분 구현</span></h2>
+    <div class="status reveal">
+      <div class="bz"><div class="in">
+        <div class="head done-head">Implemented</div>
+        <ul class="f-list">
+          <li><span class="tick">✓</span>모임 · 그룹</li>
+          <li><span class="tick">✓</span>지도 탐색</li>
+          <li><span class="tick">✓</span>번역</li>
+          <li><span class="tick">✓</span>채팅</li>
+          <li><span class="tick">✓</span>승인 · 참여</li>
+          <li><span class="tick">✓</span>신고 · 차단</li>
+        </ul>
+      </div></div>
+      <div class="bz"><div class="in">
+        <div class="head now-head">Now</div>
+        <ul class="f-list now one">
+          <li><span class="dot"></span>오류 수정</li>
+          <li><span class="dot"></span>안정화</li>
+          <li><span class="dot"></span>UX · UI 다듬기</li>
+          <li><span class="dot"></span>안드로이드 테스트</li>
+        </ul>
+      </div></div>
     </div>
   </div>
   <span class="slide-num">07</span>
 </section>
 
-<!-- 8. LAUNCH PLAN -->
+<!-- ============ 8. LAUNCH PLAN · 5:50–6:10 ============
+     핵심: 기능 개발 → 안정화 → 배포로 «이미 넘어왔다».
+     Feature development에 완료 표시를 두는 게 이 장의 핵심.
+     말로만: iOS가 가장 큰 변수. 슬라이드에 리스크는 쓰지 않는다. -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Next</span>
-    <h2 class="reveal">9월 중 <span class="accent">동시 배포</span>가 목표입니다</h2>
-    <div class="road reveal" style="margin-top:var(--content-gap)">
+    <span class="eyebrow reveal">Roadmap</span>
+    <h2 class="reveal">9월 중 Android · iOS <span class="accent">동시 배포</span>가 목표입니다</h2>
+    <div class="stage-bar reveal">
+      <span class="stage past">✓ Feature development</span>
+      <span class="arr">→</span>
+      <span class="stage on">● Stabilization</span>
+      <span class="arr">→</span>
+      <span class="stage future">○ Launch</span>
+    </div>
+    <div class="road reveal">
       <div class="bz now"><div class="in">
-        <span class="tag">9월</span>
-        <h3>안드로이드 · iOS 동시 배포</h3>
-        <p>테스트와 안정화를 마치고 두 스토어에 한꺼번에 올리는 것을 목표로 하고 있습니다.</p>
+        <span class="tag">Now</span>
+        <h3>안정화</h3>
+        <ul>
+          <li><span>·</span>오류 수정</li>
+          <li><span>·</span>불안정한 부분 다듬기</li>
+          <li><span>·</span>안드로이드 테스트</li>
+        </ul>
       </div></div>
       <div class="bz"><div class="in">
-        <span class="tag">배포 후</span>
-        <h3>결제 연동 · 인증 문제 해결</h3>
-        <p>유료 모임을 위한 결제 연동, 그리고 본인인증·비자 인증으로 신뢰도를 높입니다.</p>
+        <span class="tag">Before Launch</span>
+        <h3>배포 준비</h3>
+        <ul>
+          <li><span>·</span>iOS 실기기 테스트</li>
+          <li><span>·</span>iOS 빌드 · 배포 준비</li>
+          <li><span>·</span>디자인 다듬기</li>
+        </ul>
       </div></div>
-      <div class="bz"><div class="in">
-        <span class="tag">배포 후</span>
-        <h3>웹페이지 개설</h3>
-        <p>모임을 공유하고 검색으로 찾아 들어올 수 있는 웹 페이지를 만듭니다.</p>
+      <div class="bz goal"><div class="in">
+        <span class="tag">September</span>
+        <h3>동시 배포</h3>
+        <ul>
+          <li><span>·</span>Google Play</li>
+          <li><span>·</span>App Store</li>
+        </ul>
       </div></div>
     </div>
   </div>
   <span class="slide-num">08</span>
 </section>
 
-<!-- 9. CLOSING -->
+<!-- ============ 9. CLOSING · 6:10–6:40 ============
+     기능 목록보다 메시지가 남아야 한다. 시각자료 없이 타이포와 여백만. -->
 <section class="slide dark">
   <div class="slide-content center">
-    <div class="logo-row reveal" style="justify-content:center"><img src="../icon.png" alt="PotentO 로고"><span style="color:#fff">potento</span></div>
-    <h1 class="reveal">Meet beyond language.</h1>
-    <p class="lede reveal">언어를 넘어, 관심사로 만나는 한국 생활</p>
-    <a class="url-pill reveal" style="margin-top:var(--content-gap)" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
-      kwoney.github.io/potento-landing ↗
-    </a>
+    <div class="next-row reveal">
+      <span>Payments</span><span>Identity Verification</span>
+      <span>Optional Trust Badge</span><span>Web</span>
+    </div>
+    <h1 class="reveal">현장에서 발견한 문제를<br>실제 기능으로 풀어낸 서비스</h1>
+    <p class="closing-en reveal">From real community problems to a working product.</p>
+    <div class="reveal"><span class="launch-pill">September 2026 Launch Target</span></div>
   </div>
   <span class="slide-num">09</span>
 </section>
 
 <script>
-/* =========================================== SLIDE CONTROLLER =========================================== */
+/* ===========================================
+   SLIDE CONTROLLER
+   - IntersectionObserver: 뷰포트에 들어오면 .visible → CSS 애니메이션 트리거
+   - 키보드(← → Space PageUp/Down Home/End) · 네비 점 · 진행바
+   =========================================== */
 class SlidePresentation{
   constructor(){
     this.slides=[...document.querySelectorAll('.slide')];
