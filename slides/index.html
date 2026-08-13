@@ -108,6 +108,24 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 .map-row .s{font-size:var(--small-size);color:var(--sub);line-height:1.45}
 .map-row .s b{color:var(--primary-press);font-weight:700}
 @media(max-width:600px){.map-row{grid-template-columns:1fr;gap:.15rem}.map-row .arr{display:none}}
+/* 페인포인트 → 해결 카드 (운영자/참가자) */
+.pp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.5rem,1.1vw,.9rem);margin-top:var(--content-gap)}
+@media(max-width:820px){.pp-grid{grid-template-columns:1fr}}
+.pp .in{display:flex;flex-direction:column;height:100%;padding:clamp(.7rem,1.5vw,1.3rem)}
+.pp .no{font-family:var(--font-display);font-size:clamp(.62rem,.95vw,.8rem);font-weight:700;
+  color:var(--primary);letter-spacing:.14em;margin-bottom:.35em}
+.pp h3{font-size:clamp(.85rem,1.45vw,1.12rem);margin-bottom:.4em;letter-spacing:-.02em}
+.pp .prob{font-size:var(--small-size);line-height:1.5;color:var(--sub)}
+.pp .sol{margin-top:auto;padding-top:clamp(.45rem,1.1vh,.8rem);
+  border-top:1px dashed var(--primary-border);list-style:none}
+.pp .sol li{font-size:var(--small-size);line-height:1.45;display:flex;gap:.4em;
+  align-items:flex-start;margin-top:.35em}
+.tag-now,.tag-next{flex:0 0 auto;font-size:.75em;font-weight:700;border-radius:999px;
+  padding:.2em .65em;margin-top:.15em;white-space:nowrap}
+.tag-now{background:var(--primary);color:#fff}
+.tag-next{background:var(--grayTag,#F2F2F2);color:var(--sub);border:1px solid var(--divider)}
+.side-label{display:inline-flex;align-items:center;gap:.5em;font-size:var(--small-size);
+  font-weight:700;color:var(--primary-press)}
 /* benchmark map */
 .bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(.5rem,1.2vw,1rem);margin-top:var(--content-gap)}
 .bench-grid .bz .in{padding:clamp(.7rem,1.4vw,1.2rem)}
@@ -187,178 +205,194 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
   <span class="slide-num">01</span>
 </section>
 
-<!-- 2. ORIGIN — founder story -->
+<!-- 2. TARGET -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Origin</span>
-    <h2 class="reveal">이 문제를,<br><span class="accent">운영자로서 직접</span> 겪었습니다</h2>
-    <p class="lede reveal">오프라인 커뮤니티를 직접 운영하며 사람을 모으고, 벤치마킹을 위해 국내외 모임 앱을 전부 써봤습니다. PotentO의 모든 기능은 그 과정에서 겪은 불편에서 출발합니다.</p>
-    <div class="chip-row reveal">
-      <span class="app-chip">Meetup</span><span class="app-chip">Soo House</span><span class="app-chip">Nomad Table</span>
-      <span class="app-chip">당근 모임</span><span class="app-chip">문토</span><span class="app-chip">소모임</span>
-    </div>
+    <span class="eyebrow reveal">Target</span>
+    <h2 class="reveal">누구를 위한 앱인가</h2>
     <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><h3>운영자의 눈</h3><p>모임을 열고 사람을 모으는 쪽에서 무엇이 힘든지 — 노쇼, 홍보, 개설 비용</p></div></div>
-      <div class="bz"><div class="in"><h3>참가자의 눈</h3><p>모임에 들어가는 쪽에서 무엇이 불안한지 — 언어, 신뢰, 낯선 사람과의 1:1</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">🌏</div><h3>한국 거주를 희망하는 외국인</h3><p>체류 외국인 278만 명. 이들이 꼽은 한국 생활의 어려움 1위는 «언어», 그다음이 «외로움»입니다.</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">🤝</div><h3>글로벌 국제교류를 희망하는 2030</h3><p>한국에서 세계와 만나고 싶은 청년층. 언어교류는 이미 검증된 수요입니다.</p></div></div>
     </div>
+    <p class="lede reveal" style="margin-top:var(--content-gap)">컨셉은 이렇지만, <b>사실 모임을 원하는 누구든지 사용할 수 있는 앱입니다.</b> 스터디도, 운동 모임도 열 수 있습니다. 다만 <b>처음 들어가는 문</b>을 기존 앱들이 못 푸는 «외국인과의 교류»로 잡았습니다.</p>
   </div>
   <span class="slide-num">02</span>
 </section>
 
-<!-- 3. PAIN POINTS -->
+<!-- 3. ORIGIN -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Pain Points</span>
-    <h2 class="reveal">기존 앱들을 쓰며 만난 <span class="accent">6가지 벽</span></h2>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz pain"><div class="in"><h3>🌐 언어 장벽</h3><p>외국인에게는 콘텐츠 자체가 진입장벽. 한국어 아니면 영어, 한쪽만 지원</p><span class="stat">체류 외국인 278만 명 · 한국살이 고충 1위 «언어»(40%)</span></div></div>
-      <div class="bz pain"><div class="in"><h3>👻 노쇼</h3><p>운영자는 당일까지 참여 인원을 예측할 수 없다 — 모임 퀄리티를 흔드는 1순위</p><span class="stat">무료 모임 노쇼율 40~60% · 문토는 «노쇼 방지비»를 따로 받는다</span></div></div>
-      <div class="bz pain"><div class="in"><h3>🎭 신뢰 · 로맨스 스캠</h3><p>낯선 사람과의 1:1 만남 불안, 스캠 계정의 무차별 DM</p><span class="stat">국내 로맨스스캠 피해 1,380억 원 (2024.2~2025.7, 경찰청)</span></div></div>
-      <div class="bz pain"><div class="in"><h3>🔕 메시지를 안 본다</h3><p>공지를 보내도 확인율이 낮다 — 알림 설계와 UI 배치의 문제</p><span class="stat">푸시 알림 평균 오픈율 ~20%</span></div></div>
-      <div class="bz pain"><div class="in"><h3>📅 일정 겹침</h3><p>여러 모임에 참여할수록 일정 충돌을 본인도 모른다 — 운영하며 반복 관찰한 문제</p></div></div>
-      <div class="bz pain"><div class="in"><h3>💸 개설 부담</h3><p>첫 그룹을 만들기까지 신경 쓸 게 너무 많고, 노출은 유료 — 운영자 진입장벽</p><span class="stat">Meetup 모임장 월 $19.99 · 소모임 월 15,500원</span></div></div>
+    <span class="eyebrow reveal">Origin</span>
+    <h2 class="reveal">직접 운영하고,<br><span class="accent">직접 써보며</span> 찾은 문제들</h2>
+    <p class="lede reveal">저는 외국인 오프라인 커뮤니티를 직접 운영하고 있습니다. 그리고 여러 모임 앱들을 직접 사용하고 분석하면서 겪은 페인포인트를 기반으로 앱을 개발했습니다.</p>
+    <div class="chip-row reveal">
+      <span class="app-chip">Meetup</span><span class="app-chip">소모임</span><span class="app-chip">문토</span>
+      <span class="app-chip">당근 모임</span><span class="app-chip">Nomad Table</span><span class="app-chip">Soo House</span>
     </div>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><h3>🏠 운영자 입장의 문제</h3><p>모임을 여는 쪽 — 노쇼, 연락의 부재, 첫 그룹 개설의 부담</p></div></div>
+      <div class="bz"><div class="in"><h3>🙋 참가자 입장의 문제</h3><p>모임에 들어가는 쪽 — 언어 장벽, 신뢰 문제, 일정 겹침</p></div></div>
+    </div>
+    <p class="lede reveal" style="margin-top:var(--element-gap);font-size:var(--small-size)">지금 구현이 된 것도 있고, 배포 후에 구현할 부분들도 있습니다.</p>
   </div>
   <span class="slide-num">03</span>
 </section>
 
-<!-- 4. PAIN → SOLUTION MAPPING -->
+<!-- 4. HOST PAIN POINTS -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Solution</span>
-    <h2 class="reveal">겪은 문제 → 넣은 기능</h2>
-    <div class="map-list reveal">
-      <div class="map-row"><span class="p">🌐 언어 장벽</span><span class="arr">→</span><span class="s"><b>콘텐츠 자동 번역 + 채팅 즉시 번역</b> — 초기 진입장벽부터 낮춘다</span></div>
-      <div class="map-row"><span class="p">👻 노쇼</span><span class="arr">→</span><span class="s"><b>승인제 참가 · D-1 확정 리마인드</b> — 운영자가 인원을 예측할 수 있게</span></div>
-      <div class="map-row"><span class="p">🎭 신뢰 · 스캠</span><span class="arr">→</span><span class="s"><b>1:1 DM은 신뢰 관계에서만</b> · 신고/차단 시 채팅 가림 · 프로필 인증 뱃지</span></div>
-      <div class="map-row"><span class="p">🔕 메시지 확인</span><span class="arr">→</span><span class="s"><b>채팅 통합 탭 + 알림 범위 설계</b> — 봐야 할 것만 확실히 닿게</span></div>
-      <div class="map-row"><span class="p">📅 일정 겹침</span><span class="arr">→</span><span class="s"><b>참가 시 겹침 경고</b> — 충돌을 참가 시점에 미리 알려준다</span></div>
-      <div class="map-row"><span class="p">💸 개설 부담</span><span class="arr">→</span><span class="s"><b>무료 · 가벼운 그룹 개설 플로우</b> — 운영자 공급을 막지 않는다</span></div>
+    <span class="eyebrow reveal">Host</span>
+    <h2 class="reveal">운영자 입장의 <span class="accent">세 가지 문제</span></h2>
+    <div class="pp-grid reveal">
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 01</div>
+        <h3>노쇼</h3>
+        <p class="prob">참가 신청을 하더라도 실제로 오지 않습니다. 당일까지 몇 명이 올지 알 수 없어 장소 예약도 준비도 어렵습니다. <b>무료 모임 노쇼율은 40~60%.</b></p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>참가 승인제 — 호스트가 보고 승인</span></li>
+          <li><span class="tag-now">구현</span><span>전날 저녁 참석 확인 알림</span></li>
+          <li><span class="tag-next">배포 후</span><span>유료 모임으로 확실하게</span></li>
+        </ul>
+      </div></div>
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 02</div>
+        <h3>연락의 부재</h3>
+        <p class="prob">지금 쓰는 Meetup에서는 사용자들이 메시지를 잘 확인하지 않습니다. <b>눈에 띄지 않는 가장 오른쪽에 메시지 탭이 있어서</b> 그런 것 같기도 합니다.</p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>채팅을 하단 탭 안쪽에 배치</span></li>
+          <li><span class="tag-now">구현</span><span>안 읽은 메시지 탭 표시</span></li>
+          <li><span class="tag-now">구현</span><span>모임·그룹·개인 메시지 한 화면</span></li>
+        </ul>
+      </div></div>
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 03</div>
+        <h3>첫 그룹 개설의 부담</h3>
+        <p class="prob">모임 하나 여는 데 신경 쓸 게 너무 많습니다. 게다가 <b>Meetup은 모임장에게 월 $19.99, 소모임은 월 15,500원</b> — 노출시키려면 결국 유료입니다.</p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>개설 무료</span></li>
+          <li><span class="tag-now">구현</span><span>최대한 가벼운 개설 흐름</span></li>
+          <li><span class="tag-next">배포 후</span><span>운영자 노출 지원</span></li>
+        </ul>
+      </div></div>
     </div>
   </div>
   <span class="slide-num">04</span>
 </section>
 
-<!-- 5. STRUCTURE PHILOSOPHY -->
+<!-- 5. MEMBER PAIN POINTS -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Structure</span>
-    <h2 class="reveal">그룹이 남고, 일정이 반복되는<br><span class="accent">지속형 커뮤니티</span></h2>
-    <p class="lede reveal">만남을 일회성 이벤트가 아니라 커뮤니티 구조로 설계했습니다. 관계가 자산으로 쌓여야 운영자도, 참가자도 다시 돌아옵니다.</p>
-    <div class="flow reveal">
-      <div class="node">🏠 그룹 개설<small>관심사 기반, 지속</small></div>
-      <span class="arr">→</span>
-      <div class="node">📅 일정 등록<small>반복 개최</small></div>
-      <span class="arr">→</span>
-      <div class="node">💬 모임 채팅<small>참가 확정자 전용</small></div>
-      <span class="arr">→</span>
-      <div class="node">🤝 친구 · DM<small>관계로 전환</small></div>
-    </div>
-    <div style="margin-top:var(--content-gap)" class="reveal">
-      <div class="bub you">주말에 북한산 등산 가실 분?<span class="tr">Anyone up for hiking Bukhansan this weekend?</span></div>
-      <div class="bub me">Count me in! 저 참가할게요 🙌</div>
+    <span class="eyebrow reveal">Member</span>
+    <h2 class="reveal">참가자 입장의 <span class="accent">세 가지 문제</span></h2>
+    <div class="pp-grid reveal">
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 01</div>
+        <h3>언어 장벽</h3>
+        <p class="prob">소모임·문토를 확인해보니 <b>UI는 번역되지만 그룹명·모임 내용 같은 콘텐츠 단위 번역이 없었습니다.</b> 버튼만 영어가 되고 정작 모임 제목은 한국어 그대로입니다.</p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>전체 한 · 영 설정</span></li>
+          <li><span class="tag-now">구현</span><span><b>콘텐츠 단위 번역</b> — 제목·소개 자동 번역</span></li>
+          <li><span class="tag-now">구현</span><span>채팅 즉시 번역</span></li>
+        </ul>
+      </div></div>
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 02</div>
+        <h3>신뢰 문제</h3>
+        <p class="prob">처음 만나는 사람이라 <b>로맨스 스캠 같은 범죄에 노출</b>될 수 있습니다. 국내 피해액은 최근 1년 반 동안 1,380억 원 규모로 계속 늘고 있습니다.</p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>1:1 메시지는 친구·호스트만</span></li>
+          <li><span class="tag-now">구현</span><span>신고 · 차단, 차단 시 메시지 가림</span></li>
+          <li><span class="tag-next">배포 후</span><span>본인인증 · 비자 인증</span></li>
+        </ul>
+      </div></div>
+      <div class="bz pp"><div class="in">
+        <div class="no">PAIN 03</div>
+        <h3>일정 겹침 (노쇼)</h3>
+        <p class="prob">여러 모임에 참여하다 보면 본인도 모르게 일정이 겹칩니다. 결국 한쪽은 못 가게 되고, <b>그게 노쇼가 됩니다.</b></p>
+        <ul class="sol">
+          <li><span class="tag-now">구현</span><span>참가 시 시간 겹침 경고</span></li>
+          <li><span class="tag-now">구현</span><span>전날 참석 확인 알림</span></li>
+        </ul>
+      </div></div>
     </div>
   </div>
   <span class="slide-num">05</span>
 </section>
 
-<!-- 6. UI/UX BENCHMARKS -->
-<section class="slide">
-  <div class="slide-content">
-    <span class="eyebrow reveal">Design Decisions</span>
-    <h2 class="reveal">외국 앱의 미감 × <span class="accent">한국 앱의 효율</span></h2>
-    <p class="lede reveal">각 화면마다 그 영역에서 가장 잘하는 앱을 근거로 삼았습니다.</p>
-    <div class="bench-grid reveal">
-      <div class="bz"><div class="in"><div class="src">Meetup</div><h3>전체 디자인 · 프로필</h3><p>외국인에게 이미 익숙한 글로벌 표준 — 학습 비용 0</p></div></div>
-      <div class="bz"><div class="in"><div class="src">Nomad Table · 네이버</div><h3>지도 탐색</h3><p>근처 모임을 시각적 재미로 발견하는 직관적 경험</p></div></div>
-      <div class="bz"><div class="in"><div class="src">카카오 · WhatsApp</div><h3>채팅</h3><p>한국·글로벌 사용자 모두에게 익숙한 대화 문법</p></div></div>
-      <div class="bz"><div class="in"><div class="src">Instagram</div><h3>제스처 UX</h3><p>스와이프 탭 전환, 더블탭 새로고침 — 손에 붙은 습관 그대로</p></div></div>
-    </div>
-  </div>
-  <span class="slide-num">06</span>
-</section>
-
-<!-- 5. DEMO -->
+<!-- 6. DEMO -->
 <section class="slide">
   <div class="slide-content center">
-    <span class="eyebrow reveal">Live Demo</span>
-    <h2 class="reveal">지금 바로 만나보세요</h2>
-    <p class="lede reveal" style="margin-bottom:var(--content-gap)">서비스 소개와 Android 베타 APK 다운로드</p>
+    <span class="eyebrow reveal">Demo</span>
+    <h2 class="reveal">실제로 동작하는 앱입니다</h2>
+    <p class="lede reveal" style="margin-bottom:var(--content-gap)">서비스 소개와 Android 베타 설치</p>
     <a class="url-pill reveal" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
       kwoney.github.io/potento-landing ↗
     </a>
     <div class="qr-wrap reveal">
       <div class="qr-box"><img src="../qr-landing.svg" alt="서비스 소개 페이지 QR"><span>서비스 페이지</span></div>
-      <div class="qr-box"><img src="../qr-apk.svg" alt="Android APK 다운로드 QR"><span>Android APK 설치</span></div>
+      <div class="qr-box"><img src="../qr-apk.svg" alt="Android APK 다운로드 QR"><span>Android 베타 설치</span></div>
     </div>
-    <p class="lede reveal" style="margin-top:var(--element-gap);font-size:var(--small-size)">
-      Android 실기기에서 APK 설치 후 휴대폰 OTP로 로그인
-    </p>
+  </div>
+  <span class="slide-num">06</span>
+</section>
+
+<!-- 7. BUSINESS MODEL -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Business</span>
+    <h2 class="reveal">수익모델은 <span class="accent">세 가지</span>를 생각하고 있습니다</h2>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><div class="ic">💳</div><h3>유료 모임</h3><p>결제를 연동한 뒤 유료 모임 개설을 지원합니다. <b>노쇼 억제와 수익화를 동시에</b> 가져갈 수 있습니다.</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">✨</div><h3>For You</h3><p>외국인 정착을 돕는 서비스(부동산·어학원 등), 이벤트, 광고, 그리고 소상공인 <b>공간 대여</b>까지. 타깃이 명확해 제휴에 강점이 있습니다.</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">⭐</div><h3>프리미엄 회원제</h3><p>더 나은 탐색과 부가 기능을 원하는 사용자를 위한 구독 모델입니다.</p></div></div>
+    </div>
   </div>
   <span class="slide-num">07</span>
 </section>
 
-<!-- 8. PROGRESS -->
+<!-- 8. CURRENT STATUS -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Progress</span>
-    <h2 class="reveal">베타 출시를 향한 현재 위치</h2>
-    <div class="grid reveal" style="margin-top:var(--element-gap)">
-      <div class="stat"><b>4 + 8</b><span>메인 4탭 + 상세·개설·채팅·프로필 등 핵심 화면군 구현 완료</span></div>
-      <div class="stat"><b>23</b><span>운영 DB 테이블 — 전체 RLS(행 단위 보안) 활성 확인</span></div>
-      <div class="stat"><b>16</b><span>서비스 레이어 모듈 — 화면과 데이터 분리로 웹 확장 대비</span></div>
-      <div class="stat"><b>3</b><span>Edge Functions — 번역·알림·계정삭제, 서버 권한 검증</span></div>
-    </div>
+    <span class="eyebrow reveal">Now</span>
+    <h2 class="reveal">지금은 <span class="accent">안정화</span>에 집중하고 있습니다</h2>
+    <p class="lede reveal">계속 욕심을 부리다 보니 MVP 수준에서 개발하고자 했던 기능은 대부분 구현했습니다. 그런데 <b>기능이 많다 보니 테스트할 것도 많아졌습니다.</b></p>
     <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><h3>✅ 완료</h3><p>인증(OTP·Google) · 모임/그룹 · 채팅 3종 · DeepL 번역 · 푸시 · 신고/차단 · 친구/DM 권한 모델</p></div></div>
-      <div class="bz"><div class="in"><h3>🔄 진행 중</h3><p>출시 전 보안·회귀 전수 감사 · Sentry 모니터링 · 약관/개인정보처리방침 초안 완료</p></div></div>
-      <div class="bz"><div class="in"><h3>🎯 다음</h3><p>iOS 첫 빌드 → TestFlight 베타 → App Store · Google Play 동시 정식 출시</p></div></div>
+      <div class="bz"><div class="in"><h3>🐛 오류 잡기</h3><p>숨어 있는 오류를 테스트를 통해 잡고 있습니다</p></div></div>
+      <div class="bz"><div class="in"><h3>⚙️ 안정화</h3><p>불안정하거나 어색한 부분을 안정적으로 작동하도록</p></div></div>
+      <div class="bz"><div class="in"><h3>📱 iOS 확인</h3><p>iOS 기기는 아직 테스트하지 않아 그 부분도 확인해야 합니다</p></div></div>
+      <div class="bz"><div class="in"><h3>🎨 디자인 수정</h3><p>디자인도 다듬을 예정입니다</p></div></div>
     </div>
   </div>
   <span class="slide-num">08</span>
 </section>
 
-<!-- 9. BUSINESS MODEL -->
+<!-- 9. LAUNCH PLAN -->
 <section class="slide">
   <div class="slide-content">
-    <span class="eyebrow reveal">Business</span>
-    <h2 class="reveal">커뮤니티 위에 얹는 수익 구조</h2>
-    <div class="grid reveal" style="margin-top:var(--content-gap)">
-      <div class="bz"><div class="in"><div class="ic">✨</div><h3>For You 제휴 리스팅</h3><p>홈 탭의 큐레이션 영역 — 이벤트 제휴·광고 모델(Soo House 방식 벤치마크)을 담는 그릇. MVP에 이미 탑재</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">🤝</div><h3>B2B 정착 지원 제휴</h3><p>외국인 정착을 돕는 서비스들과의 제휴 — 타깃이 명확한 채널이라는 강점</p></div></div>
-      <div class="bz"><div class="in"><div class="ic">💳</div><h3>유료 모임 (Phase 2)</h3><p>결제 연동 후 유료 모임 개설 지원 — 노쇼 억제와 수익화를 동시에</p></div></div>
+    <span class="eyebrow reveal">Next</span>
+    <h2 class="reveal">9월 중 <span class="accent">동시 배포</span>가 목표입니다</h2>
+    <div class="road reveal" style="margin-top:var(--content-gap)">
+      <div class="bz now"><div class="in">
+        <span class="tag">9월</span>
+        <h3>안드로이드 · iOS 동시 배포</h3>
+        <p>테스트와 안정화를 마치고 두 스토어에 한꺼번에 올리는 것을 목표로 하고 있습니다.</p>
+      </div></div>
+      <div class="bz"><div class="in">
+        <span class="tag">배포 후</span>
+        <h3>결제 연동 · 인증 문제 해결</h3>
+        <p>유료 모임을 위한 결제 연동, 그리고 본인인증·비자 인증으로 신뢰도를 높입니다.</p>
+      </div></div>
+      <div class="bz"><div class="in">
+        <span class="tag">배포 후</span>
+        <h3>웹페이지 개설</h3>
+        <p>모임을 공유하고 검색으로 찾아 들어올 수 있는 웹 페이지를 만듭니다.</p>
+      </div></div>
     </div>
   </div>
   <span class="slide-num">09</span>
 </section>
 
-<!-- 10. ROADMAP -->
-<section class="slide">
-  <div class="slide-content">
-    <span class="eyebrow reveal">Roadmap</span>
-    <h2 class="reveal">베타 이후의 성장 계획</h2>
-    <div class="road reveal" style="margin-top:var(--content-gap)">
-      <div class="bz now"><div class="in">
-        <span class="tag">Now · Beta</span>
-        <h3>신뢰를 검증하는 단계</h3>
-        <p>TestFlight 베타 → 양대 스토어 동시 출시. 핵심 지표는 재참가율과 그룹 잔존율.</p>
-      </div></div>
-      <div class="bz"><div class="in">
-        <span class="tag">Phase 2</span>
-        <h3>수익화 · 확장</h3>
-        <p>유료 모임 결제(PortOne·Stripe) 및 수수료 모델, 피드 탭 활성화, 그룹 사진·게시판.</p>
-      </div></div>
-      <div class="bz"><div class="in">
-        <span class="tag">Phase 3</span>
-        <h3>플랫폼화</h3>
-        <p>데이터 기반 개인화 추천, 웹(SEO·공유 링크) 확장, 파트너 제휴 리스팅.</p>
-      </div></div>
-    </div>
-  </div>
-  <span class="slide-num">10</span>
-</section>
-
-<!-- 11. CLOSING -->
+<!-- 10. CLOSING -->
 <section class="slide dark">
   <div class="slide-content center">
     <div class="logo-row reveal" style="justify-content:center"><img src="../icon.png" alt="PotentO 로고"><span style="color:#fff">potento</span></div>
@@ -367,11 +401,8 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
     <a class="url-pill reveal" style="margin-top:var(--content-gap)" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
       kwoney.github.io/potento-landing ↗
     </a>
-    <div class="qr-wrap reveal">
-      <div class="qr-box"><img src="../qr-landing.svg" alt="서비스 소개 페이지 QR"><span>지금 스캔해 보세요</span></div>
-    </div>
   </div>
-  <span class="slide-num">11</span>
+  <span class="slide-num">10</span>
 </section>
 
 <script>
