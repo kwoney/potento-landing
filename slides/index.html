@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PotentO — 중간평가 발표</title>
+<link rel="icon" href="../favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* =========================================== THEME =========================================== */
+:root{
+  --primary:#3A4F95; --primary-press:#2D3E7A; --primary-bg:#EEF1FA; --primary-border:#C5CDE8;
+  --ink:#111111; --sub:#737373; --hint:#B0B0B0;
+  --bg:#F9F9F9; --card:#FFFFFF; --divider:#EFEFEF;
+  --font-display:'Josefin Sans',sans-serif;
+  --font-body:'Pretendard Variable',Pretendard,sans-serif;
+  --ease:cubic-bezier(0.32,0.72,0,1);
+  --title-size:clamp(1.6rem,4.6vw,3.6rem);
+  --h2-size:clamp(1.3rem,3.2vw,2.4rem);
+  --body-size:clamp(0.8rem,1.4vw,1.05rem);
+  --small-size:clamp(0.65rem,1vw,0.875rem);
+  --slide-padding:clamp(1rem,4vw,4rem);
+  --content-gap:clamp(0.5rem,2vw,2rem);
+  --element-gap:clamp(0.25rem,1vw,1rem);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+/* =========================================== VIEWPORT BASE (mandatory) =========================================== */
+html,body{height:100%;overflow-x:hidden}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.slide{width:100vw;height:100vh;height:100dvh;overflow:hidden;scroll-snap-align:start;display:flex;flex-direction:column;position:relative}
+.slide-content{flex:1;display:flex;flex-direction:column;justify-content:center;max-height:100%;overflow:hidden;padding:var(--slide-padding)}
+.card,.container,.content-box{max-width:min(90vw,1000px);max-height:min(80vh,700px)}
+.feature-list,.bullet-list{gap:clamp(0.4rem,1vh,1rem)}
+.feature-list li,.bullet-list li{font-size:var(--body-size);line-height:1.4}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:clamp(0.5rem,1.5vw,1rem)}
+img,.image-container{max-width:100%;max-height:min(50vh,400px);object-fit:contain}
+@media (max-height:700px){:root{--slide-padding:clamp(0.75rem,3vw,2rem);--content-gap:clamp(0.4rem,1.5vw,1rem);--title-size:clamp(1.25rem,4.5vw,2.5rem);--h2-size:clamp(1rem,3vw,1.75rem)}}
+@media (max-height:600px){:root{--slide-padding:clamp(0.5rem,2.5vw,1.5rem);--content-gap:clamp(0.3rem,1vw,0.75rem);--title-size:clamp(1.1rem,4vw,2rem);--body-size:clamp(0.7rem,1.2vw,0.95rem)}
+  .nav-dots,.keyboard-hint,.decorative{display:none}}
+@media (max-height:500px){:root{--slide-padding:clamp(0.4rem,2vw,1rem);--title-size:clamp(1rem,3.5vw,1.5rem);--h2-size:clamp(0.9rem,2.5vw,1.25rem);--body-size:clamp(0.65rem,1vw,0.85rem)}}
+@media (max-width:600px){:root{--title-size:clamp(1.25rem,7vw,2.5rem)}.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.2s!important}html{scroll-behavior:auto}}
+
+/* =========================================== AMBIENT BG =========================================== */
+.mesh{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(640px 420px at 88% -4%,rgba(58,79,149,.10),transparent 60%),
+  radial-gradient(720px 520px at -12% 44%,rgba(52,152,219,.08),transparent 60%),
+  radial-gradient(520px 420px at 72% 92%,rgba(232,105,74,.06),transparent 60%)}
+
+/* =========================================== SHARED PIECES =========================================== */
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:clamp(.55rem,.9vw,.7rem);font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--primary);background:var(--primary-bg);
+  border:1px solid var(--primary-border);border-radius:999px;padding:.4em 1.2em .35em;width:max-content}
+.eyebrow::before{content:'';width:5px;height:5px;border-radius:99px;background:var(--primary)}
+h1{font-size:var(--title-size);line-height:1.08;letter-spacing:-.035em;font-weight:800;margin:clamp(.7rem,2vh,1.4rem) 0}
+h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin:clamp(.6rem,1.6vh,1.1rem) 0}
+.accent{color:var(--primary)}
+.lede{font-size:var(--body-size);line-height:1.65;color:var(--sub);max-width:56ch}
+.center{align-items:center;text-align:center}
+.center .lede{margin:0 auto}
+.slide-num{position:absolute;bottom:clamp(.8rem,2vh,1.4rem);right:var(--slide-padding);
+  font-family:var(--font-display);font-size:var(--small-size);color:var(--hint)}
+
+/* double-bezel card */
+.bz{background:rgba(17,17,17,.035);border:1px solid rgba(17,17,17,.055);border-radius:clamp(14px,1.8vw,24px);padding:clamp(4px,.5vw,7px)}
+.bz>.in{background:var(--card);border-radius:clamp(11px,1.4vw,19px);height:100%;
+  padding:clamp(.8rem,1.8vw,1.6rem);box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 1px 2px rgba(17,17,17,.03)}
+.bz .ic{width:clamp(28px,3vw,40px);height:clamp(28px,3vw,40px);border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:clamp(.9rem,1.6vw,1.2rem);margin-bottom:clamp(.5rem,1.2vh,1rem);background:var(--primary-bg)}
+.bz h3{font-size:clamp(.85rem,1.5vw,1.1rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.35em}
+.bz p{font-size:var(--small-size);line-height:1.55;color:var(--sub)}
+
+/* reveal animation */
+.reveal{opacity:0;transform:translateY(28px);filter:blur(6px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.slide.visible .reveal{opacity:1;transform:translateY(0);filter:blur(0)}
+.reveal:nth-child(1){transition-delay:.05s}.reveal:nth-child(2){transition-delay:.15s}
+.reveal:nth-child(3){transition-delay:.25s}.reveal:nth-child(4){transition-delay:.35s}
+.reveal:nth-child(5){transition-delay:.45s}
+
+/* =========================================== TITLE SLIDE =========================================== */
+.title-slide .slide-content{align-items:center;text-align:center}
+.logo-row{display:flex;align-items:center;gap:clamp(.5rem,1vw,.9rem)}
+.logo-row img{width:clamp(40px,5vw,64px);height:clamp(40px,5vw,64px);border-radius:22%}
+.logo-row span{font-family:var(--font-display);font-weight:700;font-size:clamp(1.4rem,3vw,2.4rem);position:relative;top:2px}
+.title-meta{font-size:var(--small-size);color:var(--hint);margin-top:clamp(.8rem,2vh,1.5rem)}
+
+/* problem cards */
+.pain .in{border-top:3px solid var(--primary-border)}
+.big-num{font-family:var(--font-display);font-size:clamp(1.2rem,2.6vw,2rem);font-weight:700;color:var(--primary)}
+
+/* flow diagram */
+.flow{display:flex;align-items:center;gap:clamp(.4rem,1vw,.8rem);flex-wrap:wrap;margin-top:var(--element-gap)}
+.flow .node{background:var(--primary-bg);border:1px solid var(--primary-border);border-radius:14px;
+  padding:clamp(.5rem,1.2vw,.9rem) clamp(.8rem,1.6vw,1.3rem);font-size:var(--small-size);font-weight:700;color:var(--primary-press)}
+.flow .node small{display:block;font-weight:500;font-size:.82em;color:var(--primary);margin-top:2px}
+.flow .arr{color:var(--hint)}
+
+/* chat bubbles */
+.bub{border-radius:14px;padding:.6em 1em;font-size:var(--small-size);max-width:34ch;line-height:1.5}
+.bub.me{background:var(--primary);color:#fff;border-bottom-right-radius:4px;margin-left:auto}
+.bub.you{background:#F0F0F0;border-bottom-left-radius:4px}
+.bub .tr{display:block;margin-top:.4em;padding-top:.4em;border-top:1px dashed rgba(17,17,17,.15);color:var(--sub);font-size:.9em}
+.bub.me .tr{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.85)}
+
+/* demo slide */
+.url-pill{display:inline-flex;align-items:center;gap:.6em;background:var(--card);border:1px solid var(--primary-border);
+  border-radius:999px;padding:.7em 1.5em;font-family:var(--font-display);font-weight:600;
+  font-size:clamp(.85rem,2vw,1.4rem);color:var(--primary-press);box-shadow:0 16px 40px -18px rgba(58,79,149,.45);text-decoration:none}
+.url-pill:hover{background:var(--primary-bg)}
+
+/* stats */
+.stat b{display:block;font-family:var(--font-display);font-size:clamp(1.3rem,3vw,2.3rem);font-weight:700;color:var(--primary)}
+.stat span{font-size:var(--small-size);color:var(--sub)}
+
+/* roadmap */
+.road{display:flex;gap:clamp(.5rem,1.2vw,1rem);flex-wrap:wrap}
+.road .bz{flex:1;min-width:min(100%,220px)}
+.road .tag{display:inline-block;font-size:clamp(.55rem,.8vw,.68rem);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--primary-bg);color:var(--primary);border-radius:999px;padding:.35em 1em;margin-bottom:.7em}
+.road .now .tag{background:var(--primary);color:#fff}
+
+/* closing */
+.dark{background:linear-gradient(135deg,#151a2e 0%,#2D3E7A 55%,#3A4F95 100%);color:#fff}
+.dark h1,.dark h2{color:#fff}
+.dark .lede{color:rgba(255,255,255,.75)}
+.dark .slide-num{color:rgba(255,255,255,.4)}
+
+/* =========================================== CHROME (progress / dots / hint) =========================================== */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--primary);width:0;z-index:100;transition:width .2s var(--ease)}
+.nav-dots{position:fixed;right:clamp(8px,1.5vw,20px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:99px;border:none;background:rgba(17,17,17,.15);cursor:pointer;padding:0;transition:all .4s var(--ease)}
+.nav-dots button.active{background:var(--primary);height:20px}
+.keyboard-hint{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);font-size:.7rem;color:var(--hint);z-index:100}
+</style>
+</head>
+<body>
+<div class="mesh"></div>
+<div class="progress-bar" id="progress"></div>
+<nav class="nav-dots" id="dots" aria-label="슬라이드 이동"></nav>
+<p class="keyboard-hint">← → 또는 스크롤로 이동</p>
+
+<!-- 1. TITLE -->
+<section class="slide title-slide">
+  <div class="slide-content">
+    <div class="logo-row reveal"><img src="../icon.png" alt="PotentO 로고"><span>potento</span></div>
+    <h1 class="reveal">관심사로 연결되는<br><span class="accent">한국 생활</span>의 시작</h1>
+    <p class="lede reveal">한국 장기 거주 외국인과 한국인을 잇는 O2O 커뮤니티</p>
+    <p class="title-meta reveal">중간평가 발표 · 2026. 08. 14 · KOZIT</p>
+  </div>
+  <span class="slide-num">01</span>
+</section>
+
+<!-- 2. PROBLEM -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Problem</span>
+    <h2 class="reveal">한국에 살지만,<br>한국 생활에 <span class="accent">연결되지 못하는</span> 사람들</h2>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz pain"><div class="in">
+        <div class="big-num">언어 장벽</div>
+        <p>관심사가 같아도 언어가 달라 시작조차 못 하는 대화. 기존 커뮤니티는 한국어 아니면 영어, 한쪽만 지원합니다.</p>
+      </div></div>
+      <div class="bz pain"><div class="in">
+        <div class="big-num">일회성 만남</div>
+        <p>이벤트 앱은 한 번 모이고 끝. 관계가 쌓이지 않으니 다시 처음부터 낯선 사람을 만나야 합니다.</p>
+      </div></div>
+      <div class="bz pain"><div class="in">
+        <div class="big-num">신뢰 · 안전 불안</div>
+        <p>익명 기반 만남의 불안함. 특히 외국인과의 오프라인 만남에서 상대를 믿을 근거가 없습니다.</p>
+      </div></div>
+    </div>
+  </div>
+  <span class="slide-num">02</span>
+</section>
+
+<!-- 3. SOLUTION -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Solution</span>
+    <h2 class="reveal">그룹이 남고, 일정이 반복되는<br><span class="accent">지속형 커뮤니티</span></h2>
+    <p class="lede reveal">PotentO는 만남을 일회성 이벤트가 아니라 커뮤니티 구조로 설계했습니다.</p>
+    <div class="flow reveal">
+      <div class="node">🏠 그룹 개설<small>관심사 기반, 지속</small></div>
+      <span class="arr">→</span>
+      <div class="node">📅 일정 등록<small>반복 개최</small></div>
+      <span class="arr">→</span>
+      <div class="node">💬 모임 채팅<small>참가 확정자 전용</small></div>
+      <span class="arr">→</span>
+      <div class="node">🤝 친구 · DM<small>관계로 전환</small></div>
+    </div>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><div class="ic">🌐</div><h3>한 · 영 동시 지원</h3><p>모임 소개는 자동 번역·캐싱, 채팅은 길게 눌러 즉시 번역 (DeepL)</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">✓</div><h3>신뢰 기반 인증</h3><p>비자·외국인등록증 선택 인증 → 프로필 ✓ 뱃지로 신뢰 축적</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">🛡️</div><h3>안전 장치 내장</h3><p>승인제 참가 · 신고/차단 · 만 18세 가입 기준 · D-1 참석 리마인더</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">03</span>
+</section>
+
+<!-- 4. PRODUCT -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Product</span>
+    <h2 class="reveal">MVP에 담은 핵심 경험</h2>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><div class="ic">🔍</div><h3>홈 · 지도 탐색</h3><p>피드와 지도(클러스터링)에서 내 주변 모임 탐색, 카테고리 8종 필터</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">💬</div><h3>실시간 채팅 3종</h3><p>모임 채팅 · 그룹 채팅 · 1:1 DM — Supabase Realtime 기반</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">🔔</div><h3>푸시 알림</h3><p>채팅·친구·참가·승인 알림. 수신자와 문구는 서버가 결정하는 보안 구조</p></div></div>
+      <div class="bz"><div class="in"><div class="ic">👥</div><h3>참가 방식 선택</h3><p>즉시 참가 또는 호스트 승인제 — 호스트가 참가자를 거를 수 있는 안전판</p></div></div>
+    </div>
+    <div style="margin-top:var(--content-gap)" class="reveal">
+      <div class="bub you">주말에 북한산 등산 가실 분?<span class="tr">Anyone up for hiking Bukhansan this weekend?</span></div>
+      <div class="bub me">Count me in! 저 참가할게요 🙌</div>
+    </div>
+  </div>
+  <span class="slide-num">04</span>
+</section>
+
+<!-- 5. DEMO -->
+<section class="slide">
+  <div class="slide-content center">
+    <span class="eyebrow reveal">Live Demo</span>
+    <h2 class="reveal">지금 바로 만나보세요</h2>
+    <p class="lede reveal" style="margin-bottom:var(--content-gap)">서비스 소개와 Android 베타 APK 다운로드</p>
+    <a class="url-pill reveal" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
+      kwoney.github.io/potento-landing ↗
+    </a>
+    <p class="lede reveal" style="margin-top:var(--content-gap);font-size:var(--small-size)">
+      Android 실기기에서 APK 설치 후 휴대폰 OTP 또는 Google 계정으로 로그인
+    </p>
+  </div>
+  <span class="slide-num">05</span>
+</section>
+
+<!-- 6. PROGRESS -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Progress</span>
+    <h2 class="reveal">베타 출시를 향한 현재 위치</h2>
+    <div class="grid reveal" style="margin-top:var(--element-gap)">
+      <div class="stat"><b>4 + 8</b><span>메인 4탭 + 상세·개설·채팅·프로필 등 핵심 화면군 구현 완료</span></div>
+      <div class="stat"><b>23</b><span>운영 DB 테이블 — 전체 RLS(행 단위 보안) 활성 확인</span></div>
+      <div class="stat"><b>16</b><span>서비스 레이어 모듈 — 화면과 데이터 분리로 웹 확장 대비</span></div>
+      <div class="stat"><b>3</b><span>Edge Functions — 번역·알림·계정삭제, 서버 권한 검증</span></div>
+    </div>
+    <div class="grid reveal" style="margin-top:var(--content-gap)">
+      <div class="bz"><div class="in"><h3>✅ 완료</h3><p>인증(OTP·Google) · 모임/그룹 · 채팅 3종 · DeepL 번역 · 푸시 · 신고/차단 · 친구/DM 권한 모델</p></div></div>
+      <div class="bz"><div class="in"><h3>🔄 진행 중</h3><p>출시 전 보안·회귀 전수 감사 · Sentry 모니터링 · 약관/개인정보처리방침 초안 완료</p></div></div>
+      <div class="bz"><div class="in"><h3>🎯 다음</h3><p>iOS 첫 빌드 → TestFlight 베타 → App Store · Google Play 동시 정식 출시</p></div></div>
+    </div>
+  </div>
+  <span class="slide-num">06</span>
+</section>
+
+<!-- 7. ROADMAP -->
+<section class="slide">
+  <div class="slide-content">
+    <span class="eyebrow reveal">Roadmap</span>
+    <h2 class="reveal">베타 이후의 성장 계획</h2>
+    <div class="road reveal" style="margin-top:var(--content-gap)">
+      <div class="bz now"><div class="in">
+        <span class="tag">Now · Beta</span>
+        <h3>신뢰를 검증하는 단계</h3>
+        <p>TestFlight 베타 → 양대 스토어 동시 출시. 핵심 지표는 재참가율과 그룹 잔존율.</p>
+      </div></div>
+      <div class="bz"><div class="in">
+        <span class="tag">Phase 2</span>
+        <h3>수익화 · 확장</h3>
+        <p>유료 모임 결제(PortOne·Stripe) 및 수수료 모델, 피드 탭 활성화, 그룹 사진·게시판.</p>
+      </div></div>
+      <div class="bz"><div class="in">
+        <span class="tag">Phase 3</span>
+        <h3>플랫폼화</h3>
+        <p>데이터 기반 개인화 추천, 웹(SEO·공유 링크) 확장, 파트너 제휴 리스팅.</p>
+      </div></div>
+    </div>
+  </div>
+  <span class="slide-num">07</span>
+</section>
+
+<!-- 8. CLOSING -->
+<section class="slide dark">
+  <div class="slide-content center">
+    <div class="logo-row reveal" style="justify-content:center"><img src="../icon.png" alt="PotentO 로고"><span style="color:#fff">potento</span></div>
+    <h1 class="reveal">Meet beyond language.</h1>
+    <p class="lede reveal">언어를 넘어, 관심사로 만나는 한국 생활</p>
+    <a class="url-pill reveal" style="margin-top:var(--content-gap)" href="https://kwoney.github.io/potento-landing/" target="_blank" rel="noopener">
+      kwoney.github.io/potento-landing ↗
+    </a>
+  </div>
+  <span class="slide-num">08</span>
+</section>
+
+<script>
+/* =========================================== SLIDE CONTROLLER =========================================== */
+class SlidePresentation{
+  constructor(){
+    this.slides=[...document.querySelectorAll('.slide')];
+    this.current=0;
+    this.setupObserver();
+    this.setupKeys();
+    this.setupDots();
+    this.setupProgress();
+  }
+  setupObserver(){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          this.current=this.slides.indexOf(e.target);
+          this.syncDots();this.syncProgress();
+        }
+      });
+    },{threshold:.55});
+    this.slides.forEach(s=>io.observe(s));
+  }
+  go(i){
+    const n=Math.max(0,Math.min(this.slides.length-1,i));
+    this.slides[n].scrollIntoView({behavior:'smooth'});
+  }
+  setupKeys(){
+    document.addEventListener('keydown',e=>{
+      if(['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();this.go(this.current+1);}
+      if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();this.go(this.current-1);}
+      if(e.key==='Home'){this.go(0);} if(e.key==='End'){this.go(this.slides.length-1);}
+    });
+  }
+  setupDots(){
+    const nav=document.getElementById('dots');
+    this.dots=this.slides.map((_,i)=>{
+      const b=document.createElement('button');
+      b.setAttribute('aria-label',`슬라이드 ${i+1}`);
+      b.addEventListener('click',()=>this.go(i));
+      nav.appendChild(b);return b;
+    });
+    this.syncDots();
+  }
+  syncDots(){this.dots?.forEach((d,i)=>d.classList.toggle('active',i===this.current));}
+  setupProgress(){this.bar=document.getElementById('progress');this.syncProgress();}
+  syncProgress(){this.bar.style.width=((this.current+1)/this.slides.length*100)+'%';}
+}
+new SlidePresentation();
+</script>
+</body>
+</html>
