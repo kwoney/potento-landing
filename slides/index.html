@@ -113,7 +113,21 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 .hero-copy{display:flex;flex-direction:column;align-items:flex-start}
 @media(max-width:900px),(max-height:560px){.hero-grid{grid-template-columns:1fr}
   .phone-stage{display:none}.hero-copy{align-items:center;text-align:center}}
-.phone-stage{position:relative;display:flex;justify-content:center;align-items:center}
+/* 말풍선 폰·번역 태그의 %offset 기준을 «그리드 칸»이 아니라 «폰»으로 고정한다.
+   칸 폭은 화면 크기에 따라 변해서, 기준이 칸이면 조각들이 폰에서 멀어졌다 붙었다 한다.
+   .float-tag / .phone-mini 의 %값은 랜딩 메인 이미지의 간격을 실측해 옮긴 것이다
+   (회전이 걸려 있어 CSS %와 실제 렌더 위치가 어긋나므로 측정 후 보정했다). */
+.phone-stage{position:relative;display:flex;justify-content:center;align-items:center;
+  width:max-content;margin-inline:auto;
+  /* 구도 전체를 한 번에 키운다. 폰트값을 요소별로 올리면 메인 폰·말풍선 폰·태그가
+     서로 다른 비율로 커져 구도가 틀어지므로, 스테이지째 확대한다.
+     transform 이 아니라 scale 속성을 쓴다 — .reveal 등장 애니메이션이
+     transform 을 쓰고 있어서 서로 덮어쓰기 때문이다. */
+  scale:1.25;transform-origin:center center}
+/* 폰은 화면 «높이»에 비례해 커지는데 글씨 칸은 «가로»에 비례한다.
+   그래서 세로로 긴 화면(4:3 등)에서는 구도가 제목 글씨를 침범한다.
+   16:9 계열(발표용 프로젝터·노트북)에서는 크게, 그보다 정사각에 가까우면 줄인다. */
+@media (max-aspect-ratio:3/2){.phone-stage{scale:1.08}}
 .phone-shell{font-size:clamp(8px,1.5vh,14px);
   background:rgba(17,17,17,.05);border:1px solid rgba(17,17,17,.07);
   padding:.6em;border-radius:3.9em;transform:rotate(2.5deg);
@@ -151,12 +165,12 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 .ptab b.on{color:var(--primary)}
 .ptab b span{font-size:1.5em}
 .ptab b .dot{position:absolute;top:-.1em;right:.35em;width:.5em;height:.5em;border-radius:99px;background:var(--warn)}
-.float-tag{position:absolute;z-index:5;background:rgba(255,255,255,.92);
+.float-tag{position:absolute;z-index:5;width:max-content;background:rgba(255,255,255,.92);
   backdrop-filter:blur(12px);border:1px solid rgba(17,17,17,.06);border-radius:1.1em;
   box-shadow:0 2em 4em -1.6em rgba(17,17,17,.3);padding:.75em 1.1em;
-  font-size:clamp(9px,1.35vh,13px);font-weight:700;top:11%;right:-1%;transform:rotate(-2deg)}
+  font-size:clamp(9px,1.35vh,13px);font-weight:700;top:23.5%;left:82.8%;right:auto;transform:rotate(-2deg)}
 .float-tag small{display:block;font-weight:500;color:var(--sub);font-size:.82em;margin-top:.2em}
-.phone-mini{position:absolute;left:-6%;bottom:-4%;z-index:6;
+.phone-mini{position:absolute;left:-39.3%;top:59.1%;bottom:auto;z-index:6;
   font-size:clamp(7px,1.15vh,11px);
   background:rgba(17,17,17,.05);border:1px solid rgba(17,17,17,.07);
   padding:.55em;border-radius:3.4em;transform:rotate(-5deg);
@@ -345,7 +359,7 @@ h2{font-size:var(--h2-size);line-height:1.12;letter-spacing:-.03em;font-weight:8
 <div class="mesh"></div>
 <div class="progress-bar" id="progress"></div>
 <nav class="nav-dots" id="dots" aria-label="슬라이드 이동"></nav>
-<p class="keyboard-hint">← → 또는 스크롤로 이동</p>
+<p class="keyboard-hint">클릭 · ← → · 스크롤로 이동 &nbsp;|&nbsp; 우클릭 = 이전</p>
 
 <!-- ============ 1. TITLE · 0:00–0:15 ============
      말로만: 인사와 본인 소개. 슬라이드에는 이름만 둔다. -->
@@ -703,6 +717,7 @@ class SlidePresentation{
     this.current=0;
     this.setupObserver();
     this.setupKeys();
+    this.setupClicks();
     this.setupDots();
     this.setupProgress();
   }
@@ -727,6 +742,20 @@ class SlidePresentation{
       if(['ArrowDown','ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();this.go(this.current+1);}
       if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();this.go(this.current-1);}
       if(e.key==='Home'){this.go(0);} if(e.key==='End'){this.go(this.slides.length-1);}
+    });
+  }
+  /* 마우스: 좌클릭=다음 / 우클릭·Shift+클릭=이전.
+     네비 점·링크·버튼 위에서는 그쪽 동작을 막지 않는다. */
+  setupClicks(){
+    const isControl = t => t.closest('button, a, input, textarea, select, .nav-dots');
+    document.addEventListener('click', e => {
+      if (isControl(e.target)) return;
+      this.go(e.shiftKey ? this.current - 1 : this.current + 1);
+    });
+    document.addEventListener('contextmenu', e => {
+      if (isControl(e.target)) return;
+      e.preventDefault();
+      this.go(this.current - 1);
     });
   }
   setupDots(){
